@@ -65,7 +65,6 @@
                             </thead>
                             <tbody>
                                 @foreach ($customers as $key => $customer)
-                                {{-- @dd($customers)    --}}
                                     <tr>
                                         <td>{{ $customer->name }}</td>
                                         <td>{{ $customer->email }}</td>
@@ -91,10 +90,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
-
                             </tbody>
-
                         </table>
                     </div>
                 </div>
