@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-Demo | Create Customer
+Demo | Create Seller
 @endsection
 @push('styles')
 @endpush
@@ -15,13 +15,13 @@ Demo | Create Customer
                 <div class="col">
                     <h3 class="page-title">Create</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('customers.index') }}">Customers</a></li>
-                        <li class="breadcrumb-item active">Create Customer</li>
+                        <li class="breadcrumb-item"><a href="{{ route('sellers.index') }}">Sellers</a></li>
+                        <li class="breadcrumb-item active">Create Seller</li>
                     </ul>
                 </div>
                 <div class="col-auto float-end ms-auto">
                     {{-- <a href="#" class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_group"><i
-                            class="fa fa-plus"></i> Add Customer</a> --}}
+                            class="fa fa-plus"></i> Add Seller</a> --}}
                 </div>
             </div>
         </div>
@@ -31,24 +31,24 @@ Demo | Create Customer
                 <div class="card-title">
                     <div class="row">
                     <div class="col-xl-12 mx-auto">
-                        <h6 class="mb-0 text-uppercase">Create A Customer</h6>
+                        <h6 class="mb-0 text-uppercase">Create A Seller</h6>
                         <hr>
                         <div class="card border-0 border-4">
                             <div class="card-body">
-                                <form action="{{ route('customers.store') }}" method="post" enctype="multipart/form-data">
+                                <form action="{{ route('sellers.store') }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     <div class="border p-4 rounded">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="inputEnterYourName" class="col-form-label"> Name <span style="color: red;">*</span></label>
-                                                <input type="text" name="name" id="" class="form-control" value="{{ old('name') }}" placeholder="Enter Customer Name">
+                                                <input type="text" name="name" id="" class="form-control" value="{{ old('name') }}" placeholder="Enter Seller Name">
                                                 @if($errors->has('name'))
                                                 <div class="error" style="color:red;">{{ $errors->first('name') }}</div>
                                                 @endif
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="inputEnterYourName" class="col-form-label"> Email <span style="color: red;">*</span></label>
-                                                <input type="text" name="email" id="" class="form-control" value="{{ old('email') }}" placeholder="Enter Customer Email">
+                                                <input type="text" name="email" id="" class="form-control" value="{{ old('email') }}" placeholder="Enter Seller Email">
                                                 @if($errors->has('email'))
                                                 <div class="error" style="color:red;">{{ $errors->first('email') }}</div>
                                                 @endif

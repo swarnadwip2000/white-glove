@@ -4,9 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegistrationMail;
+use App\Traits\ImageTrait;
+use Illuminate\Support\Facades\Storage;
+use File;
 
 class SellerController extends Controller
 {
+    use ImageTrait;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,8 @@ class SellerController extends Controller
      */
     public function index()
     {
-        //
+        $sellers = User::Role('SELLER')->get();
+        return view('admin.seller.list')->with(compact('sellers'));
     }
 
     /**
@@ -24,7 +32,7 @@ class SellerController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.seller.create');
     }
 
     /**
@@ -35,7 +43,40 @@ class SellerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:users|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
+            'password' => 'required|min:8',
+            'confirm_password' => 'required|min:8|same:password',
+            'address' => 'required',
+            'phone' => 'required',
+            'profile_picture' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
+            'status' => 'required',
+            'pincode' => 'required',
+        ]);
+
+        $data = new User();
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->password = bcrypt($request->password);
+        $data->address = $request->address;
+        $data->phone = $request->phone;
+        $data->status = $request->status;
+        $data->city = $request->city;
+        $data->country = $request->country;
+        $data->pincode = $request->pincode;
+        $data->profile_picture = $this->imageUpload($request->file('profile_picture'), 'seller');
+        $data->save();
+        $data->assignRole('SELLER');
+        $maildata = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'type' => 'Seller',
+        ];
+
+        Mail::to($request->email)->send(new RegistrationMail($maildata));
+        return redirect()->route('sellers.index')->with('message', 'Seller created successfully.');
     }
 
     /**
@@ -57,7 +98,8 @@ class SellerController extends Controller
      */
     public function edit($id)
     {
-        //
+       $seller = User::findOrFail($id);
+         return view('admin.seller.edit')->with(compact('seller'));
     }
 
     /**
@@ -69,7 +111,42 @@ class SellerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
+            'address' => 'required',
+            'phone' => 'required',
+            'status' => 'required',
+            'pincode' => 'required',
+        ]);
+        $data = User::findOrFail($id);
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->address = $request->address;
+        $data->phone = $request->phone;
+        $data->status = $request->status;
+        $data->city = $request->city;
+        $data->country = $request->country;
+        $data->pincode = $request->pincode;
+        if ($request->password != null) {
+            $request->validate([
+                'password' => 'min:8',
+                'confirm_password' => 'min:8|same:password',
+            ]);
+            $data->password = bcrypt($request->password);
+        }
+        if ($request->hasFile('profile_picture')) {
+            $request->validate([
+                'profile_picture' => 'image|mimes:jpg,png,jpeg,gif,svg',
+            ]);
+            if ($data->profile_picture) {
+                $currentImageFilename = $data->profile_picture; // get current image name
+                Storage::delete('app/'.$currentImageFilename);
+            }
+            $data->profile_picture = $this->imageUpload($request->file('profile_picture'), 'seller');
+        }
+        $data->save();
+        return redirect()->route('sellers.index')->with('message', 'Seller updated successfully.');
     }
 
     /**
@@ -81,5 +158,20 @@ class SellerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function changeSellersStatus(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $user->status = $request->status;
+        $user->save();
+        return response()->json(['success' => 'Status change successfully.']);
+    }
+
+    public function delete($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('sellers.index')->with('error', 'Seller has been deleted successfully.');
     }
 }

@@ -56,9 +56,16 @@ Route::group(['middleware' => ['admin'], 'prefix'=>'admin'], function () {
         'customers' => CustomerController::class,
         'sellers' => SellerController::class,
     ]);
+    //  Customer Routes
     Route::prefix('customers')->group(function () {
-        Route::get('/changeCustomerStatus', [CustomerController::class, 'changeCustomerStatus'])->name('admin.customers.change-status');
         Route::get('/customer-delete/{id}', [CustomerController::class, 'delete'])->name('customers.delete');
+    });
+    Route::get('/changeCustomerStatus', [CustomerController::class, 'changeCustomersStatus'])->name('customers.change-status');
+
+    // Seller Routes
+    Route::get('/changeSellerStatus', [SellerController::class, 'changeSellersStatus'])->name('sellers.change-status');
+    Route::prefix('sellers')->group(function () {
+        Route::get('/seller-delete/{id}', [SellerController::class, 'delete'])->name('sellers.delete');
     });
 
 });
