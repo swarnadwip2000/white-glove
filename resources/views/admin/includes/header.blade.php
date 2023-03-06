@@ -47,5 +47,4 @@
                 <a class="dropdown-item" href="{{ route('admin.logout') }}">Logout</a>
             </div>
         </div>
-
     </div>

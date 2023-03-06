@@ -28,7 +28,7 @@
                             <span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
                             <div class="dash-widget-info">
                                 <h3>112</h3>
-                                <span>Open Tickets</span>
+                                <span>Total Products</span>
                             </div>
                         </div>
                     </div>
@@ -39,30 +39,32 @@
                             <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
                             <div class="dash-widget-info">
                                 <h3>44</h3>
-                                <span>Today Presents</span>
+                                <span>Total Categories</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <a href="{{ route('sellers.index') }}" style="color: black">
                     <div class="card dash-widget">
                         <div class="card-body">
-                            <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
+                            <span class="dash-widget-icon"><i class="fa fa-users"></i></span>
                             <div class="dash-widget-info">
-                                <h3>37</h3>
-                                <span>Today Leave</span>
+                                <h3>{{ $count['seller'] }}</h3>
+                                <span>Total Sellers</span>
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-                    <a href="#" style="color: black">
+                    <a href="{{ route('customers.index') }}" style="color: black">
                         <div class="card dash-widget">
                             <div class="card-body">
                                 <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
                                 <div class="dash-widget-info">
-                                    <h3>10</h3>
-                                    <span>Total Employees</span>
+                                    <h3>{{ $count['customer'] }}</h3>
+                                    <span>Total Customer</span>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +73,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12 col-lg-12 col-xl-4 d-flex">
+                {{-- <div class="col-md-12 col-lg-12 col-xl-4 d-flex">
                     <div class="card flex-fill dash-statistics">
                         <div class="card-body">
                             <h5 class="card-title">Statistics</h5>
@@ -207,7 +209,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
 
         </div>
