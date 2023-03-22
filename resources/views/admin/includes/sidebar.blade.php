@@ -7,7 +7,7 @@
                 </li>
                 
                 <li class="menu-title">
-                    <span>Main</span>
+                    <span>Main Section</span>
                 </li>
 
                 <li class="submenu">
@@ -20,20 +20,54 @@
                         <li class="{{ Request::is('admin/password*') ? 'active' : ' ' }}">
                             <a href="{{ route('admin.password') }}">Change Password</a>
                         </li>
-                        <li class="{{ Request::is('admin/detail*') ? 'active' : ' ' }}">
-                            <a href="{{ route('admin.index') }}">Admin List</a>
-                        </li>                     
+                                           
                     </ul>
+                </li>
+
+                <li class="menu-title">
+                    <span>Catalog Section</span>
+                </li>
+                <li class="submenu">
+                    <a href="#" class="{{ Request::is('admin/categories*') ? 'active' : ' ' }}"><i class="la la-sitemap"></i> <span>Category</span> <span
+                            class="menu-arrow"></span></a>
+                    <ul style="display: none;">
+                        <li class="{{ Request::is('admin/categories*') ? 'active' : ' ' }}">
+                            <a href="{{ route('categories.index') }}">Category List</a>
+                        </li>   
+                        <li class="{{ Request::is('admin/categories/create*') ? 'active' : ' ' }}">
+                            <a href="{{ route('categories.create') }}">Create Category</a>
+                        </li>        
+                    </ul>
+                </li>
+
+                <li class="submenu">
+                    <a href="#" class="{{ Request::is('admin/products*') ? 'active' : ' ' }}"><i class="la la-cubes"></i> <span>Product</span> <span
+                            class="menu-arrow"></span></a>
+                    <ul style="display: none;">
+                        <li class="{{ Request::is('admin/products*') ? 'active' : ' ' }}">
+                            <a href="{{ route('products.index') }}">Product List</a>
+                        </li>   
+                        <li class="{{ Request::is('admin/products/create*') ? 'active' : ' ' }}">
+                            <a href="{{ route('products.create') }}">Create Product</a>
+                        </li>        
+                    </ul>
+                </li>
+
+                <li class="menu-title">
+                    <span>User Section</span>
                 </li>
                 <li class="{{ Request::is('admin/customers*') ? 'active' : ' ' }}">
                     <a href="{{ route('customers.index') }}" ><i class="la la-users"></i> <span>Manage Customers</span></a>                 
                 </li>
 
-                <li class="{{ Request::is('admin/sellers*') ? 'active' : ' ' }}">
-                    <a href="{{ route('sellers.index') }}" ><i class="la la-user"></i> <span>Manage Sellers</span></a>                 
+                <li class="menu-title">
+                    <span>Other Section</span>
                 </li>
-                
+                <li class="{{ Request::is('admin/contact-us*') ? 'active' : ' ' }}">
+                    <a href="{{ route('admin.contactUs') }}" ><i class="la la-phone"></i> <span>Contact Us</span></a>                 
+                </li>
 
+               
                 {{-- <li class="{{ Request::is('admin/members*') ? 'active' : ' ' }}">
                     <a href="{{ route('user.index') }}"><i class="la la-users"></i> <span>Members</span></a>
                 </li>

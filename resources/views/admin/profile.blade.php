@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-Derick Veliz | Profile
+White Globe Admin | Profile
 @endsection
 @push('styles')
 @endpush

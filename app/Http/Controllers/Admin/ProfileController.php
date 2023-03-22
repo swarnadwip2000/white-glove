@@ -16,7 +16,7 @@ class ProfileController extends Controller
         return view('admin.profile');
     }
 
-    public function update(Request $request)
+    public function profileUpdate(Request $request)
     {
         $request->validate([
             'name'     => 'required',
@@ -29,13 +29,15 @@ class ProfileController extends Controller
 
         if ($request->hasFile('profile_picture')) {
             $request->validate([
-                'profile_picture' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                'profile_picture' => 'required|image|mimes:jpg,webp,png,jpeg,gif,svg|max:2048',
             ]);
-            
-            $file= $request->file('profile_picture');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $image_path = $request->file('profile_picture')->store('admin', 'public');
-            $data->profile_picture = $image_path;
+            $fileData = $this->imageUpload($request->file('profile_picture'), 'admin');
+            if (!empty($fileData['filePath'])) {
+                if ((!empty($data->profile_picture)) && Storage::exists($data->profile_picture)) {
+                    Storage::delete($data->profile_picture);
+                }
+                $data->profile_picture = $fileData['filePath'] ?? null;
+            }
         }
         $data->save();
         return redirect()->back()->with('message', 'Profile updated successfully.');

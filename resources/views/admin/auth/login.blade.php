@@ -10,7 +10,7 @@
         content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
-    <title>Login - Chat Box Admin Panel</title>
+    <title>Login - White Globe Admin Panel</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('admin_assets/img/favicon.png') }}">
 
@@ -39,7 +39,7 @@
             <div class="container">
 
                 <div class="account-logo">
-                    <a href="admin-dashboard.html"><img src="{{ asset('admin_assets/img/logo2.png') }}"
+                    <a href="admin-dashboard.html"><img src="{{ asset('admin_assets/img/logo.png') }}"
                             alt="Dreamguy's Technologies"></a>
                 </div>
 

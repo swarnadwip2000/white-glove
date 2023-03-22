@@ -7,7 +7,9 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\CustomerController;
-use App\Http\Controllers\Admin\SellerController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ContactUsController as AdminContactUsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,35 +39,34 @@ Route::group(['middleware' => ['admin'], 'prefix'=>'admin'], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('profile', [ProfileController::class, 'index'])->name('admin.profile');
     Route::post('profile/update', [ProfileController::class, 'profileUpdate'])->name('admin.profile.update');
-    Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
-
-    Route::prefix('detail')->group(function () {
-        Route::get('/',[AdminController::class,'index'])->name('admin.index');
-        Route::post('/store',[AdminController::class,'store'])->name('admin.store');
-        Route::post('/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
-        Route::get('/delete/{id}', [AdminController::class, 'delete'])->name('admin.delete');
-        Route::post('/update',[AdminController::class, 'update'])->name('admin.update'); 
-    });   
+    Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout'); 
     
     Route::prefix('password')->group(function () {
         Route::get('/', [ProfileController::class, 'password'])->name('admin.password'); // password change
         Route::post('/update', [ProfileController::class, 'passwordUpdate'])->name('admin.password.update'); // password update
-    });    
-
+    });  
+    
     Route::resources([
         'customers' => CustomerController::class,
-        'sellers' => SellerController::class,
+        'categories' => CategoryController::class,
+        'products' => AdminProductController::class,
     ]);
+    //  Category Routes
+    Route::get('/changeCategoryStatus', [CategoryController::class, 'changeCategoriesStatus'])->name('categories.change-status');
+    Route::prefix('categories')->group(function () {
+        Route::get('/category-delete/{id}', [CategoryController::class, 'delete'])->name('categories.delete');
+    });
     //  Customer Routes
     Route::prefix('customers')->group(function () {
         Route::get('/customer-delete/{id}', [CustomerController::class, 'delete'])->name('customers.delete');
     });
     Route::get('/changeCustomerStatus', [CustomerController::class, 'changeCustomersStatus'])->name('customers.change-status');
 
-    // Seller Routes
-    Route::get('/changeSellerStatus', [SellerController::class, 'changeSellersStatus'])->name('sellers.change-status');
-    Route::prefix('sellers')->group(function () {
-        Route::get('/seller-delete/{id}', [SellerController::class, 'delete'])->name('sellers.delete');
-    });
+    //  Product Routes
+    Route::get('/changeProductsStatus', [AdminProductController::class, 'changeProductsStatus'])->name('products.change-status');
+    Route::get('/changeFeaturedProduct', [AdminProductController::class, 'changeFeaturedProduct'])->name('products.featured-product');
+
+    //contact us
+    Route::get('/contact-us', [AdminContactUsController::class, 'contactUs'])->name('admin.contactUs');
 
 });
