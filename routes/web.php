@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\ForgetPasswordController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
@@ -10,16 +10,9 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactUsController as AdminContactUsController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\Frontend\CmsController;
+use App\Http\Controllers\Frontend\AuthController;
+
 
 // Clear cache
 Route::get('clear', function () {
@@ -27,19 +20,36 @@ Route::get('clear', function () {
     return "Optimize clear has been successfully";
 });
 
-Route::get('/', [AuthController::class, 'login'])->name('admin.login');
-Route::post('/login-check', [AuthController::class, 'loginCheck'])->name('admin.login.check');  //login check
+// Route::get('/', [AuthController::class, 'login'])->name('admin.login');
+Route::get('/', [CmsController::class, 'home'])->name('home');
+Route::get('/about', [CmsController::class, 'about'])->name('about');
+Route::get('/contact', [CmsController::class, 'contact'])->name('contact');
+Route::get('/product/{id}', [CmsController::class, 'products'])->name('product');
+Route::get('/product-detail/{id}', [CmsController::class, 'productDetail'])->name('product-detail');
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::get('/blogs', [CmsController::class, 'blogs'])->name('blogs');
+Route::post('/register-store', [AuthController::class, 'registerStore'])->name('register.store');
+Route::post('/user-login-check', [AuthController::class, 'loginCheck'])->name('login.check');
+
 Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword'])->name('admin.forget.password');
 Route::post('change-password', [ForgetPasswordController::class, 'changePassword'])->name('admin.change.password');
 Route::get('forget-password/show', [ForgetPasswordController::class, 'forgetPasswordShow'])->name('admin.forget.password.show');
 Route::get('reset-password/{id}/{token}', [ForgetPasswordController::class, 'resetPassword'])->name('admin.reset.password');
 Route::post('change-password', [ForgetPasswordController::class, 'changePassword'])->name('admin.change.password');
 
-Route::group(['middleware' => ['admin'], 'prefix'=>'admin'], function () {
+
+Route::get('/admin', [AdminAuthController::class, 'admin'])->name('admin');
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/login', [AdminAuthController::class, 'login'])->name('admin.login');
+    Route::post('/login-check', [AdminAuthController::class, 'loginCheck'])->name('admin.login.check');  //login check
+    Route::group(['middleware' => 'admin'], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('profile', [ProfileController::class, 'index'])->name('admin.profile');
     Route::post('profile/update', [ProfileController::class, 'profileUpdate'])->name('admin.profile.update');
-    Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout'); 
+    Route::get('logout', [AdminAuthController::class, 'logout'])->name('admin.logout'); 
     
     Route::prefix('password')->group(function () {
         Route::get('/', [ProfileController::class, 'password'])->name('admin.password'); // password change
@@ -67,6 +77,7 @@ Route::group(['middleware' => ['admin'], 'prefix'=>'admin'], function () {
     Route::get('/changeFeaturedProduct', [AdminProductController::class, 'changeFeaturedProduct'])->name('products.featured-product');
 
     //contact us
-    Route::get('/contact-us', [AdminContactUsController::class, 'contactUs'])->name('admin.contactUs');
+    Route::get('/contact-us', [AdminContactUsController::class, 'contactUs'])->name('admin.contact-us');
 
+});
 });

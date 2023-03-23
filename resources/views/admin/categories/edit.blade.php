@@ -50,7 +50,7 @@ White Globe | Edit Category Details
                                             <div class="col-md-6">
                                                 <label for="inputEnterYourName" class="col-form-label"> Slug <span style="color: red;">*</span></label>
                                                 @if($category['main'] == 1)
-                                                <input type="text" name="slug" id="" class="form-control" value="{{ $category['slug'] }}" placeholder="Slug" readonly>
+                                                <input type="text" name="slug" id="" class="form-control" value="{{ $category['slug'] }}" placeholder="Slug" >
                                                 @else
                                                 <input type="text" name="slug" id="" class="form-control" value="{{ $category['slug'] }}" placeholder="Slug" >
                                                 @endif

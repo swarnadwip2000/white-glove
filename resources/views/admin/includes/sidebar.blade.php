@@ -64,7 +64,7 @@
                     <span>Other Section</span>
                 </li>
                 <li class="{{ Request::is('admin/contact-us*') ? 'active' : ' ' }}">
-                    <a href="{{ route('admin.contactUs') }}" ><i class="la la-phone"></i> <span>Contact Us</span></a>                 
+                    <a href="{{ route('admin.contact-us') }}" ><i class="la la-phone"></i> <span>Contact Us</span></a>                 
                 </li>
 
                

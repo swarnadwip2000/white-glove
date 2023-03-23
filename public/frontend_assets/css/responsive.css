@@ -1,0 +1,286 @@
+:root {
+    --main-color: #F2E4CF;
+    --heading-color:#1E1E1E;
+    --text-color: #1E1E1E;
+    --white-color:#fff;
+    --black-color:#000;
+    --main-font: 'Montserrat', sans-serif;
+    --heading-font: 'Montserrat', sans-serif;
+    --button-font: 'Oswald', sans-serif;
+}
+
+@media (min-width:1450px){
+    .container{
+        max-width: 1500px;
+    }
+}
+@media (max-width:1600px){
+    .our_recent_work .slick-current .work_img:before {
+        width: 515px;
+        height: 410px;
+    }
+    .our_recent_work .slid_img .work_img img {
+        height: 220px;
+    }
+    .slide .slide__content{
+        width: 50%;
+    }
+}
+
+
+@media (max-width:1440px){
+    .client_s .slick-nav{
+        bottom: -33px;
+    }
+    .slide .slide__content--headings .title{
+        font-size: 50px;
+    }
+    .slide .banner_img {
+        position: absolute;
+        bottom: 0;
+        right: 2%;
+        transform: translateY(0%);
+        display: flex;
+        align-items: center;
+    }
+    .slide .banner_img img {
+        height: auto;
+        width: 100%;
+    }
+    .login_banner_left_text h2 {
+        font-size: 45px;
+    }
+    .blog_img {
+        height: 240px
+    }
+}
+@media (max-width:1366px){
+    .logo{
+        width: 200px;
+        display: flex;
+        align-items: center;
+    }
+    .heading_hp h2 {
+        font-size: 40px;
+    }
+    .heading_hp p {
+        font-size: 15px;
+        line-height: 24px;
+    }
+    
+    .ser_img img {
+        height: 486px;
+    }
+    .mini_box2 img, .mini_box img{
+        height: auto;
+    }
+    .online_book_bg {
+        width: 57%;
+    }
+    
+}
+
+@media (max-width:1280px){
+    .login_banner_left_text {
+        padding: 0 30px;
+    }
+}
+
+@media (max-width:1024px){
+    .logo {
+        width: auto;
+    }
+    .main-menu .logo a{
+        position: relative;
+        padding: 0;
+    }
+    .main-menu .navbar{
+        flex-wrap: inherit;
+    }
+    .location{
+        display: none;
+    }
+    .banner_span {
+        font-size: 18px;
+    }
+    .logo a img {
+        width: 147px;
+    }
+    .main_hed {
+        top: 83px;
+        font-size: 100px;
+    }
+    .client-review-img {
+        font-size: 75px;
+    }
+    .contact-form-box{
+        margin-bottom: 0;
+    }
+    .banner_img {
+        width: 100%;
+    }
+    .banner_text h1 {
+        font-size: 55px;
+    }
+    .call_girl{
+        display: none;
+    }
+    .ftr_logo_sec .ftr_logo {
+        width: 160px;
+    }
+}
+@media (max-width:768px){
+    .banner_text h1 {
+        font-size: 60px;
+    }
+    .sec_btn {
+        padding: 12px 33px;
+    }
+    .our-client-img{
+        display: none;
+    }
+    .our-clients-wrap {
+        padding: 35px;
+    }
+    .our-clients-box {
+        background: none;
+    }
+    .counter_js #counter {
+        display: block;
+        columns: 3;
+    }
+    .about_sec:before {
+        height: 100px;
+    }
+    .slider, .slide {
+        height: 80vh;
+    }
+    .slide .slide__content--headings .title {
+        font-size: 30px;
+    }
+    .product_slider{
+        margin-top: 30px;
+    }
+    .can_bis{
+        padding-bottom: 0;
+    }
+    .bg_cannabis {
+        top: 0;
+        transform: translate(0px, 0%);
+    }
+    .ondema{
+        margin-bottom: 30px;
+    }
+    .inner_banner_ontent h2 {
+        font-size: 40px;
+    }
+    .inner_bnr_right_img{
+        display: none;
+    }
+    .login_page_bnr_f{
+        padding: 100px 0;
+    }
+    .can_img, .online_book_bg{
+        display: none;
+    }
+}
+
+@media (max-width:767px){
+    .our_recent_work .slick-current .work_img:before{
+        background: none;
+    }
+    .red_btn {
+        padding: 12px 22px;
+        letter-spacing: 1px;
+        font-size: 13px;
+    }
+    .heading_hp h2 {
+        font-size: 25px;
+    }   
+    .logo a img {
+        width: 100px;
+    }
+    .top_button a {
+        padding: 10px 25px;
+        letter-spacing: 1px;
+    }   
+    .banner_text h1 {
+        font-size: 40px;
+    }
+    .slide .slide__content {
+        width: 80%;
+    }
+    .slide .slide__content.slide__content__left {
+        left: 9%;
+        transform: translate(0%, -50%);
+        width: 83%;
+    }
+    .login::before{
+        content: none;
+    }
+    .login{
+        font-size: 0;
+        padding: 10px 10px;
+        letter-spacing: 0;
+    }
+    .hdr_manu_nav {
+        width: 37px;
+        height: 32px;
+    }
+    .main_menu_hdr label .burger {
+        width: 24px;
+        height: 16px;
+    }
+    .icon_c a {
+        padding: 15px;
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+    .login i{
+        font-size: 14px;
+    }
+    .cannabis_tow_box{
+        margin-bottom: 15px;
+    }
+    .slick-nav{
+        display: none !important;
+    }
+    .about_sec {
+        padding: 50px 0;
+    }
+    .can_bis_2{
+        padding-top: 50px;
+    }
+    .abt_img_type2 {
+        padding: 0;
+        width: 100%;
+    }
+    .abt_img_type2 img{
+        margin-bottom: 20px;
+    }
+    .abt_content {
+        padding-left: 0;
+        margin-top: 30px;
+    }
+    .contact-form{
+        padding: 0;
+    }
+    .catagory_box {
+        padding: 0 17px 19px;
+    }
+    .login a i{
+        font-size: 14px;
+    }
+    .slide .banner_img{
+        display: none;
+    }
+}
+@media (max-width:425.98px){
+    .red_btn {
+        padding: 10px 13px;
+    }
+}
+@media (max-width:375.98px){
+    
+}

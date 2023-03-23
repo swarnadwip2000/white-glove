@@ -9,6 +9,15 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+    public function admin()
+    {
+        if (Auth::check() && Auth::user()->hasRole('ADMIN')) {
+            return redirect()->route('admin.dashboard');
+        } else {
+            return redirect()->route('admin.login');
+        }
+    }
+    
     public function login()
     {
         if (Auth::check() && Auth::user()->hasRole('ADMIN')) {
