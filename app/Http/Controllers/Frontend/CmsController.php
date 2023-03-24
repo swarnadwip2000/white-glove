@@ -44,6 +44,16 @@ class CmsController extends Controller
         return view('frontend.product-detail',compact('categories','product','related_products'));
     }
 
+    public function cart()
+    {
+        return view('frontend.cart');
+    }
+
+    public function wishlist()
+    {
+        return view('frontend.wishlist');
+    }
+
     public function blogs()
     {
         return view('frontend.blogs');

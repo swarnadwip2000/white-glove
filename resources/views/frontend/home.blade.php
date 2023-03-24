@@ -6,7 +6,11 @@ White Globe | HOME
 @endsection
 @push('styles')
 @endpush
-
+@php
+    use Illuminate\Support\Facades\Storage;
+    use App\Helpers\Wish;
+    use App\Helpers\AddToCart;
+@endphp
 
 @section('content')
 
@@ -111,54 +115,7 @@ White Globe | HOME
             </a>
           </div>
           @endforeach
-          {{-- <div class="cata_box">
-            <a href="product.html">
-              <div class="cata_img">
-                <img src="{{asset('frontend_assets/images/cata1.png')}}" alt=""/>
-              </div>
-              <h5>Comics- The Bronze Age (1970 - 1983)</h5>
-            </a>
-          </div>
-          <div class="cata_box">
-            <a href="product.html">
-              <div class="cata_img">
-                <img src="{{asset('frontend_assets/images/cata2.png')}}" alt=""/>
-              </div>
-              <h5>Comics - The Modern Age (1992 - Present)</h5>
-            </a>
-          </div>
-          <div class="cata_box">
-            <a href="product.html">
-              <div class="cata_img">
-                <img src="{{asset('frontend_assets/images/cata3.png')}}" alt=""/>
-              </div>
-              <h5>Superhero Capes, Boots, And Bracelets - (Apparel)</h5>
-            </a>
-          </div>
-          <div class="cata_box">
-            <a href="product.html">
-              <div class="cata_img">
-                <img src="{{asset('frontend_assets/images/cata4.png')}}" alt=""/>
-              </div>
-              <h5>The Utility Belt - (Tech)</h5>
-            </a>
-          </div>
-          <div class="cata_box">
-            <a href="product.html">
-              <div class="cata_img">
-                <img src="{{asset('frontend_assets/images/cata5.png')}}" alt=""/>
-              </div>
-              <h5>The Secret Hideout. - (Home Decor)</h5>
-            </a>
-          </div>
-          <div class="cata_box">
-            <a href="product.html">
-              <div class="cata_img">
-                <img src="{{asset('frontend_assets/images/cata3.png')}}" alt=""/>
-              </div>
-              <h5>Superhero Capes, Boots, And Bracelets - (Apparel)</h5>
-            </a>
-          </div>               --}}
+
 
         </div>
       </div>
@@ -201,7 +158,12 @@ White Globe | HOME
             <div class="card_box">
               <div class="wish_cart">
                 <div class="wish">
-                  <a href="{{ route('product-detail',$product['id']) }}"><i class="fa-solid fa-heart"></i></a>
+ 
+                  @if (Auth::check() && Auth::user()->hasRole('CUSTOMER'))
+                    <a href="javascript:void(0);" class="add-wishlist @if((Wish::wishListCount($product['id'], Auth::user()->id)) > 0) active-wishlist @endif" id="wish-{{ $product['id'] }}" data-wish="{{ $product['id'] }}" ><i class="fa-solid fa-heart"></i></a>
+                    @else
+                    <a href="{{ route('login') }}" class=""><i class="fa-regular fa-heart"></i></a>
+                    @endif
                 </div>                    
               </div>
               <div class="card_img">
@@ -223,132 +185,19 @@ White Globe | HOME
                 </div>
                 <h3>Price ${{ $product['price'] }}</h3>
                 <div class="cart">
-                  <a href=""><i class="fa-solid fa-bag-shopping"></i> Add</a>
+                  @if(AddToCart::CheckCartItem($product['id']) > 0)
+                    <a href="{{ route('cart') }}"><i class="fa-solid fa-cart-shopping"></i></a>
+                    @else
+                    <div class="cart-disable-{{ $product['id'] }}">
+                    <a href="javascript:void(0);" data-route="{{ route('add-to-cart') }}" class="add-cart" data-id="{{ $product['id'] }}"><i class="fa-solid fa-cart-shopping"></i></a>
+                  </div>
+                  @endif
                 </div>
               </div>
             </div>
           </div>
           @endforeach
-          {{-- <div class="product_slid">
-            <div class="card_box">
-              <div class="wish_cart">
-                <div class="wish">
-                  <a href=""><i class="fa-solid fa-heart"></i></a>
-                </div>
-              </div>
-              <div class="card_img">
-                <a href="">
-                  <img src="{{asset('frontend_assets/images/featured_product1.jpg')}}" alt=""/>
-                </a>
-              </div>                  
-              <div class="card_text">
-                <h4><a href="">Reaper Skull Angel and Demon 3D All Over Printed</a></h4>
-                <div class="card_star">
-                  <ul>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                  </ul>
-                </div>
-                <h3>Price $34.75</h3>
-                <div class="cart">
-                  <a href=""><i class="fa-solid fa-bag-shopping"></i> Add</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="product_slid">
-            <div class="card_box">
-              <div class="wish_cart">
-                <div class="wish">
-                  <a href=""><i class="fa-solid fa-heart"></i></a>
-                </div>
-              </div>
-              <div class="card_img">
-                <a href="">
-                  <img src="{{asset('frontend_assets/images/featured_product2.jpg')}}" alt=""/>
-                </a>
-              </div>
-              <div class="card_text">
-                <h4><a href="">Reaper Skull Angel and Demon 3D All Over Printed</a></h4>
-                <div class="card_star">
-                  <ul>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                  </ul>
-                </div>
-                <h3>Price $34.75</h3>
-                <div class="cart">
-                  <a href=""><i class="fa-solid fa-bag-shopping"></i> Add</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="product_slid">
-            <div class="card_box">
-              <div class="wish_cart">
-                <div class="wish">
-                  <a href=""><i class="fa-solid fa-heart"></i></a>
-                </div>
-              </div>
-              <div class="card_img">
-                <a href="">
-                  <img src="{{asset('frontend_assets/images/featured_product3.jpg')}}" alt=""/>
-                </a>
-              </div>
-              <div class="card_text">
-                <h4><a href="">Reaper Skull Angel and Demon 3D All Over Printed</a></h4>
-                <div class="card_star">
-                  <ul>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                  </ul>
-                </div>
-                <h3>Price $34.75</h3>
-                <div class="cart">
-                  <a href=""><i class="fa-solid fa-bag-shopping"></i> Add</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="product_slid">
-            <div class="card_box">
-              <div class="wish_cart">
-                <div class="wish">
-                  <a href=""><i class="fa-solid fa-heart"></i></a>
-                </div>
-              </div>
-              <div class="card_img">
-                <a href="">
-                  <img src="{{asset('frontend_assets/images/featured_product4.jpg')}}" alt=""/>
-                </a>
-              </div>
-              <div class="card_text">
-                <h4><a href="">Reaper Skull Angel and Demon 3D All Over Printed</a></h4>
-                <div class="card_star">
-                  <ul>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                  </ul>
-                </div>
-                <h3>Price $34.75</h3>
-                <div class="cart">
-                  <a href=""><i class="fa-solid fa-bag-shopping"></i> Add</a>
-                </div>
-              </div>
-            </div>
-          </div> --}}
+          
         </div>
       </div>
     </div>
@@ -658,4 +507,58 @@ White Globe | HOME
 @endsection
 
 @push('scripts')
+<script>
+  $(document).ready(function(){
+    $('.add-wishlist').on('click', function(){
+      var id = $(this).data('wish');
+      var url = "{{ route('update-wishlist') }}";
+      
+      $.ajax({
+        url: url,
+        type: "POST",
+        data: {
+          "_token": "{{ csrf_token() }}",
+          "id": id
+        },
+        success: function(response){
+          if (response.action == 'added') {
+            $('a[data-wish='+id+']').addClass('active-wishlist');
+            toastr.success('Product added to wishlist successfully');
+              } else {
+            $('a[data-wish='+id+']').removeClass('active-wishlist');       
+            toastr.success('Product removed from wishlist successfully');       
+          }
+        }
+      });
+    });
+
+
+    $('.add-cart').on('click', function(){
+            var route = $(this).data('route');
+            var quantity = 1;
+            var product_id = $(this).data('id');
+            // alert(product_id);   
+            $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    quantity: quantity,
+                    product_id: product_id
+                },
+                success: function(response){
+                    // console.log(response);
+                    if(response.status == 'success'){
+                        $('.cart-disable-'+product_id).html('<a href="{{ route('cart') }}"><i class="fa-solid fa-cart-shopping"></i>Go to Cart</a>');
+                        toastr.success(response.message);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                }
+            });
+        });
+  });
+
+
+</script>
 @endpush

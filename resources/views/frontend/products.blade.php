@@ -7,6 +7,12 @@ White Globe | HOME
 @push('styles')
 @endpush
 
+@php
+    use Illuminate\Support\Facades\Storage;
+    use App\Helpers\Wish;
+    use App\Helpers\AddToCart;
+@endphp
+
 
 @section('content')
 <section class="inner_banner_sec">
@@ -85,7 +91,11 @@ White Globe | HOME
               <div class="card_box">
                 <div class="wish_cart">
                   <div class="wish">
-                    <a href="{{ route('product-detail',$product['id']) }}"><i class="fa-solid fa-heart"></i></a>
+                    @if (Auth::check() && Auth::user()->hasRole('CUSTOMER'))
+                    <a href="javascript:void(0);" class="add-wishlist @if((Wish::wishListCount($product['id'], Auth::user()->id)) > 0) active-wishlist @endif" id="wish-{{ $product['id'] }}" data-wish="{{ $product['id'] }}" ><i class="fa-solid fa-heart"></i></a>
+                    @else
+                    <a href="{{ route('login') }}" class=""><i class="fa-regular fa-heart"></i></a>
+                    @endif
                   </div>                    
                 </div>
                 <div class="card_img">
@@ -104,9 +114,16 @@ White Globe | HOME
                       <li><i class="fa-solid fa-star"></i></li>
                     </ul>
                   </div>
-                  <h3>Price ${{ $product['price'] }}</h3>
+                  <div class="price my-2">Price: ${{ $product['discounted_price'] }} <strike class="original-price">${{ $product['price'] }}</strike></div>
+                
                   <div class="cart">
-                    <a href=""><i class="fa-solid fa-bag-shopping"></i> Add</a>
+                    @if(AddToCart::CheckCartItem($product['id']) > 0)
+                    <a href="{{ route('cart') }}"><i class="fa-solid fa-cart-shopping"></i></a>
+                    @else
+                    <div class="cart-disable-{{ $product['id'] }}">
+                    <a href="javascript:void(0);" data-route="{{ route('add-to-cart') }}" class="add-cart" data-id="{{ $product['id'] }}"><i class="fa-solid fa-cart-shopping"></i></a>
+                  </div>
+                  @endif
                   </div>
                 </div>
               </div>
@@ -122,3 +139,32 @@ White Globe | HOME
   </section>
 
   @endsection
+
+  @push('scripts')
+  <script>
+  $('.add-cart').on('click', function(){
+    var route = $(this).data('route');
+    var quantity = 1;
+    var product_id = $(this).data('id');
+    // alert(product_id);   
+    $.ajax({
+        url: route,
+        type: 'POST',
+        data: {
+            _token: '{{ csrf_token() }}',
+            quantity: quantity,
+            product_id: product_id
+        },
+        success: function(response){
+            // console.log(response);
+            if(response.status == 'success'){
+                $('.cart-disable-'+product_id).html('<a href="{{ route('cart') }}"><i class="fa-solid fa-cart-shopping"></i>Go to Cart</a>');
+                toastr.success(response.message);
+            } else {
+                toastr.error(response.message);
+            }
+        }
+    });
+});
+</script>
+@endpush

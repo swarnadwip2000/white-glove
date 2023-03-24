@@ -17,8 +17,8 @@
             </div>
             <div class="quick_links_ul culmans_2">
               <ul>
-                <li><a href="">Home</a></li>
-                <li><a href="">About us</a></li>
+                <li><a href="{{ route('home') }}">Home</a></li>
+                <li><a href="{{ route('about') }}">About us</a></li>
                 <li><a href="">SHOP</a></li>
                 <li><a href="">CONTACT </a></li>
                 <li><a href="">offer</a></li>

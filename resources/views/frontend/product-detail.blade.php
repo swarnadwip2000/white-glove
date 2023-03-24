@@ -7,6 +7,12 @@ White Globe | HOME
 @push('styles')
 @endpush
 
+@php
+    use Illuminate\Support\Facades\Storage;
+    use App\Helpers\AddToCart;
+    use App\Helpers\Wish;
+@endphp
+
 
 @section('content')
 <section class="inner_banner_sec">
@@ -90,7 +96,7 @@ White Globe | HOME
               </div>
             </div>
            
-            <div class="price my-2">Price: ${{$product['price'] }} <strike class="original-price">${{ $product['price'] }}</strike></div>
+            <div class="price my-2">Price: ${{ $product['discounted_price'] }} <strike class="original-price">${{ $product['price'] }}</strike></div>
             <!-- <div class="theme-text subtitle">Brief Description:</div> -->
             <div class="brief-description">
                 {!! $product['specification'] !!}
@@ -108,16 +114,34 @@ White Globe | HOME
               <div class="small_number me-3">
                 <form>
                   <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value"><i class="fa-solid fa-minus"></i></div>
-                  <input type="number" id="number" value="1" />
+                  <input type="number" id="number" value="1" min="1"/>
                   <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value"><i class="fa-solid fa-plus"></i></div>
                 </form>
               </div>
             </div>
             <hr>
             <div class="d-flex justify-content-start align-items-center">
-                <div class="me-3"><a href="" class="red_btn black_bg"><span><i class="fa-solid fa-bag-shopping"></i> Add to Cart</span></a></div>
-                <div class=""><a href="" class="red_btn"><span><i class="fa-solid fa-heart"></i> Add to Wishlist</span></a></div>
-            </div>
+              {{-- <div class="small_number me-3">
+                  <input type="number" id="product-quantity" class="form-control" value="1" min="1">
+              </div> --}}
+              <div class="me-3">
+                  @if(AddToCart::CheckCartItem($product['id']) > 0)
+                  <a href="{{ route('cart') }}" class="red_btn black_bg"><span><i
+                              class="fa-solid fa-cart-shopping"></i> Go to Cart</span></a>
+                         
+                  @else
+                  <div id="cart-disable">
+                      <a href="javascript:void(0);" id="add-cart" data-route="{{ route('add-to-cart') }}" class="red_btn black_bg"><span><i
+                          class="fa-solid fa-cart-shopping"></i> Add to Cart</span></a>
+                  </div>
+                  
+                  @endif
+              </div>
+              <div class="{{ AddToCart::CheckStock($product['id']) == 0 ? 'disabledbutton' : '' }}"><a
+                href="{{ route('checkout', $product['id']) }}" class="red_btn"><span><i
+                        class="fa-solid fa-bag-shopping"></i>
+                    Buy Now</span></a></div>
+          </div>
 
         </div>
       </div>
@@ -148,7 +172,7 @@ White Globe | HOME
               </div>
               <div class="tab-pane fade" id="menu2">
                   <div class="specification">
-                      <p>PUT SPECIFICATIONS HERE</p>
+                    {!! $product['specification'] !!}
                   </div>
               </div>
           </div>
@@ -167,12 +191,12 @@ White Globe | HOME
                 </div>                    
               </div>
               <div class="card_img">
-                <a href="">
+                <a href="{{ route('product-detail',$pro['id']) }}">
                   <img src="{{ Storage::url($pro['image']) }}" alt=""/>
                 </a>
               </div>                  
               <div class="card_text">
-                <h4><a href="">{{ $pro['name'] }}</a></h4>
+                <h4><a href="{{ route('product-detail',$pro['id']) }}">{{ $pro['name'] }}</a></h4>
                 <div class="card_star">
                   <ul>
                     <li><i class="fa-solid fa-star"></i></li>
@@ -184,7 +208,7 @@ White Globe | HOME
                 </div>
                 <h3>Price ${{ $pro['price'] }}</h3>
                 <div class="cart">
-                  <a href=""><i class="fa-solid fa-bag-shopping"></i> Add</a>
+                  <a href="{{ route('product-detail',$pro['id']) }}"><i class="fa-solid fa-bag-shopping"></i> Add</a>
                 </div>
               </div>
             </div>
@@ -195,4 +219,40 @@ White Globe | HOME
     </div>
   </section>
 
+ 
+
   @endsection
+
+  @push('scripts')
+  <script>
+    $(document).ready(function(){
+        $('#add-cart').on('click', function(){
+          
+            var route = $(this).data('route');
+            var quantity = $('#number').val();
+            var product_id = {{ $product['id'] }};
+            
+            $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    quantity: quantity,
+                    product_id: product_id
+                },
+                success: function(response){
+                    console.log(response);
+                    if(response.status == 'success'){
+                        $('#cart-disable').html('<a href="{{ route('cart') }}" class="red_btn black_bg"><span><i class="fa-solid fa-cart-shopping"></i> Go to Cart</span></a>');
+                        toastr.success(response.message);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
+@endpush

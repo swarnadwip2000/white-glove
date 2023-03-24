@@ -38,10 +38,10 @@
           <div class="right_login">
             <div class="d-flex align-items-center justify-content-between">
               <div class="icon_c ms-2">
-                <a href="" class="add_cart_active"><i class="fa-solid fa-heart"></i></a>
+                <a href="{{ route('wishlist') }}" class="add_cart_active"><i class="fa-solid fa-heart"></i></a>
               </div>
               <div class="icon_c ms-2">
-                <a href="" class="add_cart_active"><i class="fa-solid fa-bag-shopping"></i></a>
+                <a href="{{ route('cart') }}" class="add_cart_active"><i class="fa-solid fa-bag-shopping"></i></a>
               </div>
               
               <div class="login">

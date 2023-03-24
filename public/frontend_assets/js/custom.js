@@ -317,15 +317,15 @@ $('.slider-nav').slick({
 /*----- Price range --------*/
 function increaseValue() {
   var value = parseInt(document.getElementById('number').value, 10);
-  value = isNaN(value) ? 0 : value;
+  value = isNaN(value) ? 1 : value;
   value++;
   document.getElementById('number').value = value;
 }
 
 function decreaseValue() {
   var value = parseInt(document.getElementById('number').value, 10);
-  value = isNaN(value) ? 0 : value;
-  value < 1 ? value = 1 : '';
+  value = isNaN(value) ? 1 : value;
+  value < 2 ? value = 2 : '';
   value--;
   document.getElementById('number').value = value;
 }

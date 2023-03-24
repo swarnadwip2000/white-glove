@@ -2207,3 +2207,10 @@ main .content {
 /*---*/
   /* RESPONSIVE CSS
   -------------------------------------------------- */
+  .active-wishlist {
+    color: #fe4c4c !important;
+}
+
+.active-wishlist-cart{
+  color: #fe4c4c !important;
+}
