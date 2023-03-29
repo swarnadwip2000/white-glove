@@ -19,13 +19,13 @@
         <div class="d-block d-lg-flex justify-content-between align-items-center">
             <div class="left_img_text">
                 <div class="cart_small_img">
-                    <a href="{{ route('product-detail', $cart['product_id']) }}"
+                    <a href=""
                         style="color:black; text-decoration:unset;"><img
                             src="{{ storage::url($cart->product['image']) }}"
                             alt="" /></a>
                 </div>
                 <div class="img_left_text">
-                    <h5><a href="{{ route('product-detail', $cart['product_id']) }}"
+                    <h5><a href=""
                             style="color:black; text-decoration:unset;">
                             {!! Str::limit($cart['product']['name'], 17, ' ...') !!}</a></h5>
                      @if(AddToCart::CheckStock($cart['product']['id']) == 0)<span class="outstock">Out of

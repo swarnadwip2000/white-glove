@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 
 class CmsController extends Controller
@@ -29,29 +30,49 @@ class CmsController extends Controller
 
     public function products($slug)
     {
-        if ($slug == 'all-products') {
+        
+        try {
+            if ($slug == 'all-products') {
+                $categories = Category::where('status', 1)->Orderby('id','desc')->get();
+                $products = Product::where('status', 1)->Orderby('id','desc')->paginate(10);
+                $single_category = "All Products";
+                return view('frontend.products',compact('categories','products','single_category'));
+            }
             $categories = Category::where('status', 1)->Orderby('id','desc')->get();
-            $products = Product::where('status', 1)->Orderby('id','desc')->paginate(10);
-            $single_category = "All Products";
+            $single_category = Category::where('slug', $slug)->first();
+            $products = Product::where('status', 1)->where('category_id', $single_category['id'])->Orderby('id','desc')->paginate(10);
             return view('frontend.products',compact('categories','products','single_category'));
+        }  catch (\Exception $e) {
+            \Log::error( $e->getMessage() );
+            abort(404);
         }
-        $categories = Category::where('status', 1)->Orderby('id','desc')->get();
-        $single_category = Category::where('slug', $slug)->first();
-        $products = Product::where('status', 1)->where('category_id', $single_category['id'])->Orderby('id','desc')->paginate(10);
-        return view('frontend.products',compact('categories','products','single_category'));
+        
     }
 
-    public function productDetail($id)
+    public function productDetail($slug,$id)
     {
-        $categories = Category::where('status', 1)->Orderby('id','desc')->get();
-        $product = Product::where('id', $id)->first();
-        $related_products = Product::where('category_id', $product->category_id)->where('id', '!=', $id)->Orderby('id','desc')->get();
-        return view('frontend.product-detail',compact('categories','product','related_products'));
+       
+        try {
+            $product_id = decrypt($id);
+            $categories = Category::where('status', 1)->Orderby('id','desc')->get();
+            $product = Product::findOrFail($product_id);
+            $related_products = Product::where('category_id', $product->category_id)->where('id', '!=', $product_id)->Orderby('id','desc')->get();
+            return view('frontend.product-detail',compact('categories','product','related_products'));
+        }  catch (\Exception $e) {
+            \Log::error( $e->getMessage() );
+            abort(404);
+        }    
     }
 
     public function cart()
     {
-        return view('frontend.cart');
+        if (Auth::check()) {
+            $userCart = Cart::where('user_id', Auth::user()->id)->get();
+        } else {
+            $session_id = Session::get('session_id');
+            $userCart = Cart::where('session_id', $session_id)->get();
+        }
+        return view('frontend.cart',compact('userCart'));
     }
 
     public function wishlist()

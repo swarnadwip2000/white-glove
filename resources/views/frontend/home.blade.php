@@ -24,18 +24,19 @@ White Globe | HOME
                 <p class="animated top-title" data-animation-in="fadeInUp" data-delay-in="0.3">Our most popular and trending <b>White Glove Comics & KCI.</b> perfect 
                   Not sure what to read now next reading mood perfectly.</p>
                 <div class="hero-text mb-3" data-animation-in="fadeInUp" data-delay-in="0.6">
-                    <a class="red_btn" href="#">Explore Now</a>
+                    <a class="red_btn" href="{{ route('product',['slug'=> 'all-products']) }}">Explore Now</a>
                 </div>
               </div>
             </div>
             <div class="banner_img">
+              @foreach($categories->take(3) as $category)
               <div class="banner_right_img">
                 <a href="">
-                  <img src="" alt="" data-lazy="{{ asset('frontend_assets/images/banner_img.png')}}" class="full-image animated" data-animation-in="fadeInUp" data-delay-in="0.3" />
+                  <img src="" alt="" data-lazy="{{ Storage::url($category['image']) }}" class="full-image animated" data-animation-in="fadeInUp" data-delay-in="0.3" />
                   <span class="full-image animated" data-animation-in="fadeInUp" data-delay-in="0.5"><b>Hooded Cloak Battle</b> of the Gods Fujin and Raijin</span>
                 </a>
               </div>
-              <div class="banner_right_img">
+              {{-- <div class="banner_right_img">
                 <a href="">
                   <span class="full-image animated" data-animation-in="fadeInDown" data-delay-in="0.5"><b>Hooded Cloak Battle</b> of the Gods Fujin and Raijin</span>
                   <img src="" alt="" data-lazy="{{ asset('frontend_assets/images/banner_img1.png')}}" class="full-image animated" data-animation-in="fadeInDown" data-delay-in="0.3" />                      
@@ -46,7 +47,8 @@ White Globe | HOME
                   <img src="" alt="" data-lazy="{{ asset('frontend_assets/images/banner_img2.png')}}" class="full-image animated" data-animation-in="fadeInUp" data-delay-in="0.3" />
                   <span class="full-image animated" data-animation-in="fadeInUp" data-delay-in="0.5"><b>Hooded Cloak Battle</b> of the Gods Fujin and Raijin</span>
                 </a>
-              </div>
+              </div> --}}
+              @endforeach
             </div>
         </div>
         <div class="slide">
@@ -56,7 +58,7 @@ White Globe | HOME
               <p class="animated top-title" data-animation-in="fadeInUp" data-delay-in="0.3">Our most popular and trending <b>White Glove Comics & KCI.</b> perfect 
                 Not sure what to read now next reading mood perfectly.</p>
               <div class="hero-text mb-3" data-animation-in="fadeInUp" data-delay-in="0.6">
-                  <a class="red_btn" href="#">Explore Now</a>
+                  <a class="red_btn" href="{{ route('product',['slug'=> 'all-products']) }}">Explore Now</a>
               </div>
             </div>
           </div>
@@ -132,7 +134,7 @@ White Globe | HOME
                 <div class="col-lg-6">
                   <div class="heading_hp text_white">
                     <h2>Present the "Gods & Monsters" Collection</h2>
-                    <a class="sec_btn" href=""><span>Shop Now</span></a>
+                    <a class="sec_btn" href="{{ route('product',['slug'=> 'all-products']) }}"><span>Shop Now</span></a>
                   </div>
                 </div>                  
             </div>
@@ -167,12 +169,12 @@ White Globe | HOME
                 </div>                    
               </div>
               <div class="card_img">
-                <a href="{{ route('product-detail',$product['id']) }}">
+                <a href="{{ route('product-detail',['slug' => $product['slug'], 'id' => encrypt($product['id'])]) }}">
                   <img src="{{ Storage::url($product['image']) }}" alt=""/>
                 </a>
               </div>                  
               <div class="card_text">
-                <h4><a href="{{ route('product-detail',$product['id']) }}">{!! Str::limit($product['name'], 30, ' ...') !!}</a></h4>
+                <h4><a href="{{ route('product-detail',['slug' => $product['slug'], 'id' => encrypt($product['id'])]) }}">{!! Str::limit($product['name'], 30, ' ...') !!}</a></h4>
                 
                 <div class="card_star">
                   <ul>
@@ -213,7 +215,7 @@ White Globe | HOME
             <div class="heading_hp text_white text-center">
               <h2>Online Book Fairs 2022</h2>
               <p>Lorem ipsum dolor sit amet consectetur. Lacus egestas odio ut enim. Mus diam rhoncus viverra varius amet tellus orci. Enim vestibulum ornare vulputate ornare egestas purus dolor. </p>
-              <a class="thired_btn" href="">Create account</a>
+              <a class="thired_btn" href="{{ route('login') }}">Create account</a>
             </div>
           </div>
         </div>

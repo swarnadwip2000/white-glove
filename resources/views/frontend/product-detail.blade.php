@@ -35,7 +35,7 @@ White Globe | HOME
         <div class="cata_slider">
         @foreach($categories as $category)
           <div class="cata_box">
-            <a href="{{ route('product',$category['id']) }}">
+            <a href="{{ route('product',$category['slug']) }}">
               <div class="cata_img">
                 <img src="{{ Storage::url($category['image']) }}" alt=""/>
               </div>
@@ -191,12 +191,12 @@ White Globe | HOME
                 </div>                    
               </div>
               <div class="card_img">
-                <a href="{{ route('product-detail',$pro['id']) }}">
+                <a href="{{ route('product-detail',['slug' => $pro['slug'], 'id' => encrypt($pro['id'])]) }}">
                   <img src="{{ Storage::url($pro['image']) }}" alt=""/>
                 </a>
               </div>                  
               <div class="card_text">
-                <h4><a href="{{ route('product-detail',$pro['id']) }}">{{ $pro['name'] }}</a></h4>
+                <h4><a href="{{ route('product-detail',['slug' => $pro['slug'], 'id' => encrypt($pro['id'])]) }}">{{ $pro['name'] }}</a></h4>
                 <div class="card_star">
                   <ul>
                     <li><i class="fa-solid fa-star"></i></li>
@@ -208,7 +208,7 @@ White Globe | HOME
                 </div>
                 <h3>Price ${{ $pro['price'] }}</h3>
                 <div class="cart">
-                  <a href="{{ route('product-detail',$pro['id']) }}"><i class="fa-solid fa-bag-shopping"></i> Add</a>
+                  <a href="{{ route('product-detail',['slug' => $pro['slug'], 'id' => encrypt($pro['id'])]) }}"><i class="fa-solid fa-bag-shopping"></i> Add</a>
                 </div>
               </div>
             </div>

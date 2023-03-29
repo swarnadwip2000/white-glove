@@ -56,7 +56,7 @@ White Globe | HOME
               <div class="inner_search_box">
                 <div class="search_box">
                   <div class="search_field">                        
-                    <input type="text" class="input" placeholder="Search">
+                    <input type="text" class="input" placeholder="Search" id="search-product">
                     <button type="submit"><i class="fas fa-search"></i></button>
                   </div>
                 </div>
@@ -90,51 +90,10 @@ White Globe | HOME
               </div>
             </div>
           </div>
-          <div class="row row-cols-1 row-cols-xxl-5 row-cols-xl-4 row-cols-lg-2">
-            @foreach($products as $product)
-            <div class="col mb-4 mb-xl-5">
-              <div class="card_box">
-                <div class="wish_cart">
-                  <div class="wish">
-                    @if (Auth::check() && Auth::user()->hasRole('CUSTOMER'))
-                    <a href="javascript:void(0);" class="add-wishlist @if((Wish::wishListCount($product['id'], Auth::user()->id)) > 0) active-wishlist @endif" id="wish-{{ $product['id'] }}" data-wish="{{ $product['id'] }}" ><i class="fa-solid fa-heart"></i></a>
-                    @else
-                    <a href="{{ route('login') }}" class=""><i class="fa-regular fa-heart"></i></a>
-                    @endif
-                  </div>                    
-                </div> 
-                <div class="card_img">
-                  <a href="{{ route('product-detail',$product['id']) }}">
-                    <img src="{{ Storage::url($product['image']) }}" alt=""/>
-                  </a>
-                </div>                  
-                <div class="card_text">
-                  <h4><a href="{{ route('product-detail',$product['id']) }}">{{ $product['name'] }}</a></h4>
-                  <div class="card_star">
-                    <ul>
-                      <li><i class="fa-solid fa-star"></i></li>
-                      <li><i class="fa-solid fa-star"></i></li>
-                      <li><i class="fa-solid fa-star"></i></li>
-                      <li><i class="fa-solid fa-star"></i></li>
-                      <li><i class="fa-solid fa-star"></i></li>
-                    </ul>
-                  </div>
-                  <div class="price my-2">Price: ${{ $product['discounted_price'] }} <strike class="original-price">${{ $product['price'] }}</strike></div>
-                
-                  <div class="cart">
-                    @if(AddToCart::CheckCartItem($product['id']) > 0)
-                    <a href="{{ route('cart') }}"><i class="fa-solid fa-cart-shopping"></i></a>
-                    @else
-                    <div class="cart-disable-{{ $product['id'] }}">
-                    <a href="javascript:void(0);" data-route="{{ route('add-to-cart') }}" class="add-cart" data-id="{{ $product['id'] }}"><i class="fa-solid fa-cart-shopping"></i></a>
-                  </div>
-                  @endif
-                  </div>
-                </div>
-              </div>
-            </div>
-           @endforeach 
+          <div class="product-search"> 
+          @include('frontend.product-search')
           </div>
+
           <div class="">
             {!! $products->links() !!}
           </div>
@@ -176,5 +135,30 @@ White Globe | HOME
         }
     });
 });
+</script>
+
+<script>
+  $(document).ready(function() {
+      $('#search-product').keyup(function() {
+          var query = $(this).val();
+          var _token = $('input[name="_token"]').val();
+          $.ajax({
+              url: "{{ route('product.search') }}",
+              method: "POST",
+              data: {
+                  query: query,
+                  _token: _token
+              },
+              success: function(response) {
+                  $('.search_dropdown').fadeIn();
+                  $('.search_dropdown').html(response.view);
+              }
+          });
+      });
+      $(document).on('click', 'li', function() {
+          $('#search-product').val($(this).text());
+          $('.search_dropdown').fadeOut();
+      });
+  });
 </script>
 @endpush

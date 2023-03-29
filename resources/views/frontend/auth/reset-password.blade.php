@@ -44,37 +44,11 @@
                     <div class="col-md-12 col-lg-6 col-xl-5">
                         <div class="login_banner_left_text">
                             <h2>Register to Explore Exciting Things</h2>
-                            <form action="{{ route('register.store') }}" method="post">
+                            <form action="{{ route('reset.password.check') }}" method="post">
                                 @csrf
+                                <input type="hidden" name="id" value="{{ $user['id'] }}">
+                                <input type="hidden" name="token" value="{{ $token }}">
                                 <div class="row g-4">
-                                    <div class="col-md-12">
-                                        <div class="login_input">
-                                            <div class="input-group flex-nowrap">
-                                                <span class="input-group-text" id=""><i
-                                                        class="fa-solid fa-user"></i></span>
-                                                <input type="text" class="form-control" name="name" value="{{ old('name') }}"
-                                                    placeholder="Full Name" aria-label="Username" aria-describedby="">
-                                            </div>
-                                            @if ($errors->has('name'))
-                                                <div class="error" style="color:red;">{{ $errors->first('name') }}
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="login_input">
-                                            <div class="input-group flex-nowrap">
-                                                <span class="input-group-text" id=""><i
-                                                        class="fa-solid fa-envelope"></i></span>
-                                                <input type="text" class="form-control" name="email" value="{{ old('email') }}"
-                                                    placeholder="Email" aria-label="email" aria-describedby="">
-                                            </div>
-                                            @if ($errors->has('email'))
-                                                <div class="error" style="color:red;">{{ $errors->first('email') }}
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
                                     <div class="col-md-12">
                                         <div class="login_input password_in">
                                             <div class="input-group flex-nowrap">
@@ -113,20 +87,9 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <button class="login_btn w-100" type="submit">Register</button>
+                                        <button class="login_btn w-100" type="submit">Submit</button>
                                     </div>
-                                    <div class="col-md-12 dont_acc text-center">
-                                        <p>Already Have an Account? <a href="{{ route('login') }}">LOGIN</a> Or
-                                            register with</p>
-                                    </div>
-                                    <div class="social_bnr">
-                                        <ul>
-                                            <li><a href=""><i class="fa-brands fa-apple"></i></a></li>
-                                            <li><a href=""><i class="fa-brands fa-google"></i></a></li>
-                                            <li><a href=""><i class="fa-brands fa-facebook-f"></i></a></li>
-                                            <li><a href=""><i class="fa-brands fa-twitter"></i></a></li>
-                                        </ul>
-                                    </div>
+                                    
                                 </div>
                             </form>
                         </div>

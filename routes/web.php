@@ -14,6 +14,9 @@ use App\Http\Controllers\Frontend\CmsController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\WishlistController;
+use App\Http\Controllers\Frontend\ForgotPasswordController;
+use App\Http\Controllers\Frontend\ProductController;
+
 
 
 // Clear cache
@@ -27,7 +30,8 @@ Route::get('/', [CmsController::class, 'home'])->name('home');
 Route::get('/about', [CmsController::class, 'about'])->name('about');
 Route::get('/contact', [CmsController::class, 'contact'])->name('contact');
 Route::get('/product/{slug}', [CmsController::class, 'products'])->name('product');
-Route::get('/product-detail/{id}', [CmsController::class, 'productDetail'])->name('product-detail');
+Route::get('/product-detail/{slug}/{id}', [CmsController::class, 'productDetail'])->name('product-detail');
+
 Route::get('/cart', [CartController::class, 'cart'])->name('cart');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -39,6 +43,11 @@ Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('add-to-
 Route::post('/remove-product-from-cart', [CartController::class, 'removeProductFromCart'])->name('remove-product-from-cart');
 Route::post('/decrease-product-quantity', [CartController::class, 'decreaseQuantity'])->name('decrease-product-quantity'); // Decrease product quantity
 Route::post('/increase-product-quantity', [CartController::class, 'increaseQuantity'])->name('increase-product-quantity'); // Increase product quantity
+Route::get('/forget-password', [ForgotPasswordController::class, 'forgetPassword'])->name('forget.password'); // forget password
+Route::post('/forget-password-check', [ForgotPasswordController::class, 'forgetPasswordCheck'])->name('forget.password.check');
+Route::get('/reset-password/{id}/{token}', [ForgotPasswordController::class, 'resetPassword'])->name('reset.password'); // reset password
+Route::post('/reset-password-check', [ForgotPasswordController::class, 'resetPasswordCheck'])->name('reset.password.check'); // reset password check
+Route::post('/product-search', [ProductController::class, 'productSearch'])->name('product.search');
 
 Route::middleware('customer')->group(function () {
     Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist'); // category wise product
@@ -50,7 +59,7 @@ Route::middleware('customer')->group(function () {
 Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword'])->name('admin.forget.password');
 Route::post('change-password', [ForgetPasswordController::class, 'changePassword'])->name('admin.change.password');
 Route::get('forget-password/show', [ForgetPasswordController::class, 'forgetPasswordShow'])->name('admin.forget.password.show');
-Route::get('reset-password/{id}/{token}', [ForgetPasswordController::class, 'resetPassword'])->name('admin.reset.password');
+// Route::get('reset-password/{id}/{token}', [ForgetPasswordController::class, 'resetPassword'])->name('admin.reset.password');
 Route::post('change-password', [ForgetPasswordController::class, 'changePassword'])->name('admin.change.password');
 
 

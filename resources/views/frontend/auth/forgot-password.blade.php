@@ -6,7 +6,7 @@
         <meta name="description" content="">
         <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
         <meta name="generator" content="Hugo 0.84.0">
-        <title>{{ env('APP_NAME') }} | Login Page</title>
+        <title>{{ env('APP_NAME') }} | Forget Password Page</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
@@ -33,10 +33,13 @@
             </div>
             <div class="col-md-12 col-lg-6 col-xl-5">
               <div class="login_banner_left_text">
-                <h2>Welcome again!</h2>
-                <form action="{{ route('login.check') }}" method="post">
+                <h2>FORGET YOUR PASSWORD</h2>
+                <form action="{{ route('forget.password.check') }}" method="post">
                   @csrf
                   <div class="row g-4">
+                    <div class="col-md-12 text-center">
+                        <p class="forgot_pass">Please enter your email address for reset your password.</p>
+                      </div>
                     <div class="col-md-12">
                       <div class="login_input">
                         <div class="input-group flex-nowrap">
@@ -49,42 +52,15 @@
                     @endif
                       </div>
                     </div>
-                    <div class="col-md-12">
-                      <div class="login_input password_in">
-                        <div class="input-group flex-nowrap">
-                          <span class="input-group-text" id=""><i
-                            class="fa-solid fa-key"></i></span>
-                            <input type="password" name="password" class="form-control"
-                            placeholder="Password" id="password-field1" aria-label="Username"
-                            aria-describedby="">
-                        <a href="javascript:void(0);" id="btnToggle"
-                            class="input-group-text eye_slash toggle"><i id="eyeIcon"
-                                toggle="#password-field1" class="fa fa-eye-slash"></i></a>
-                        </div>
-                        @if ($errors->has('password'))
-                        <div class="error" style="color:red;">
-                            {{ $errors->first('password') }}</div>
-                    @endif
-                      </div>
-                    </div>
-                    <div class="col-md-12 text-center">
-                      <a href="{{ route('forget.password') }}" class="forgot_pass">forgot Your Password?</a>
-                    </div>
+                    
+                    
                     <div class="col-12">
-                      <button class="login_btn w-100" type="submit">Login</button>
+                      <button class="login_btn w-100" type="submit">Send</button>
                     </div>
                     <div class="col-md-12 dont_acc text-center">
-                      <p>Don't Have an Account? <a href="{{ route('register') }}">SIGNUP NOW</a> Or Login with</p>
+                      <p>Don't Have an Account? <a href="{{ route('register') }}">SIGNUP NOW</a></p>
                     </div>
-                    <div class="social_bnr">
-                      <ul>
-                        <li><a href=""><i class="fa-brands fa-apple"></i></a></li>
-                        <li><a href=""><i class="fa-brands fa-google"></i></a></li>
-                        <li><a href=""><i class="fa-brands fa-facebook-f"></i></a></li>
-                        <li><a href=""><i class="fa-brands fa-twitter"></i></a></li>
-                      </ul>
-                    </div>
-                    
+                   
                   </div>
                 </form>
               </div>

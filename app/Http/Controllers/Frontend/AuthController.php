@@ -61,6 +61,7 @@ class AuthController extends Controller
             if ($user->status == true) {
                 if ($user->hasRole('CUSTOMER')) {
                     // update cart table with user id
+                    Cart::where('session_id', Session::get('session_id'))->update(['user_id' => $user->id]);
                    
                     return redirect()->route('home')->with('message', 'Login Successfully.');
                 } else {
