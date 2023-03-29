@@ -102,7 +102,7 @@ White Globe | HOME
                     <a href="{{ route('login') }}" class=""><i class="fa-regular fa-heart"></i></a>
                     @endif
                   </div>                    
-                </div>
+                </div> 
                 <div class="card_img">
                   <a href="{{ route('product-detail',$product['id']) }}">
                     <img src="{{ Storage::url($product['image']) }}" alt=""/>
