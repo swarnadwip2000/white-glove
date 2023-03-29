@@ -23,7 +23,12 @@
                                            
                     </ul>
                 </li>
-
+                <li class="menu-title">
+                    <span>User Informations</span>
+                </li>
+                <li class="{{ Request::is('admin/customers*') ? 'active' : ' ' }}">
+                    <a href="{{ route('customers.index') }}" ><i class="la la-users"></i> <span>Manage Customers</span></a>                 
+                </li>
                 <li class="menu-title">
                     <span>Catalog Section</span>
                 </li>
@@ -53,12 +58,7 @@
                     </ul>
                 </li>
 
-                <li class="menu-title">
-                    <span>User Section</span>
-                </li>
-                <li class="{{ Request::is('admin/customers*') ? 'active' : ' ' }}">
-                    <a href="{{ route('customers.index') }}" ><i class="la la-users"></i> <span>Manage Customers</span></a>                 
-                </li>
+               
 
                 <li class="menu-title">
                     <span>Other Section</span>

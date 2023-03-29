@@ -16,7 +16,7 @@
                 <li><a href="{{ route('home') }}">Home</a></li>
                 <li><a href="{{ route('about') }}">About</a></li>
                 <li><a href="{{ route('contact') }}">Contact Us</a></li>
-                <li><a href="product.html">Products</a></li>
+                <li><a href="{{ route('product',['slug'=> 'all-products']) }}">Products</a></li>
               </ul>
             </nav>              
           </div> 

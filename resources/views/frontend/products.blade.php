@@ -35,7 +35,7 @@ White Globe | HOME
         <div class="cata_slider">
             @foreach($categories as $category)
           <div class="cata_box">
-            <a href="{{ route('product',$category['id']) }}">
+            <a href="{{ route('product',$category['slug']) }}">
               <div class="cata_img">
                 <img src="{{ Storage::url($category['image']) }}" alt=""/>
               </div>
@@ -76,11 +76,16 @@ White Globe | HOME
               </div>                    
             </div>
           </div>
+          @if($products->count() > 0)
           <div class="row justify-content-center align-items-center mb-3">
             <div class="col-xl-12 col-lg-12 text-center">
               <div class="silver_age">
+                @if( $single_category == 'All Products')
+                <h4>{{ $single_category }}</h4>
+                @else
                 <h4>{{ $single_category['name'] }}</h4>
-                <p>Showing 1 – 9 Packages of {{$products->count()}} results for “{{$single_category['name']}}”</p>
+                @endif
+                <p>Showing 1 – 9 Packages of {{$products->count()}} results for “@if( $single_category == 'All Products') {{ $single_category }} @else {{$single_category['name']}} @endif”</p>
                 
               </div>
             </div>
@@ -133,6 +138,11 @@ White Globe | HOME
           <div class="">
             {!! $products->links() !!}
           </div>
+          @else
+          <div>
+            <h4>No Product Found</h4>
+          </div>
+          @endif
         </div>
       </div>
     </div>

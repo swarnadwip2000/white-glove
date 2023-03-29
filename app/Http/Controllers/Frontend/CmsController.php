@@ -27,12 +27,17 @@ class CmsController extends Controller
         return view('frontend.contact');
     }
 
-    public function products($id)
+    public function products($slug)
     {
-        
+        if ($slug == 'all-products') {
+            $categories = Category::where('status', 1)->Orderby('id','desc')->get();
+            $products = Product::where('status', 1)->Orderby('id','desc')->paginate(10);
+            $single_category = "All Products";
+            return view('frontend.products',compact('categories','products','single_category'));
+        }
         $categories = Category::where('status', 1)->Orderby('id','desc')->get();
-        $single_category = Category::where('id', $id)->first();
-        $products = Product::where('status', 1)->where('category_id', $id)->Orderby('id','desc')->paginate(10);
+        $single_category = Category::where('slug', $slug)->first();
+        $products = Product::where('status', 1)->where('category_id', $single_category['id'])->Orderby('id','desc')->paginate(10);
         return view('frontend.products',compact('categories','products','single_category'));
     }
 

@@ -107,7 +107,7 @@ White Globe | HOME
         <div class="cata_slider">
           @foreach($categories as $category)
           <div class="cata_box">
-            <a href="{{ route('product',$category['id']) }}">
+            <a href="{{ route('product',$category['slug']) }}">
               <div class="cata_img">
                 <img src="{{ Storage::url($category['image']) }}" alt=""/>
               </div>
