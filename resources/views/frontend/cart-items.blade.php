@@ -64,12 +64,8 @@
                 </strike></div>
         </div>
     </div>
-    @endforeach
-
-
-  
-    
-  </div>
+    @endforeach   
+</div>
   <div class="col-lg-4">
     <div class="cart_right">
       <div class="row m-0">

@@ -37,10 +37,16 @@ class CmsController extends Controller
                 $products = Product::where('status', 1)->Orderby('id','desc')->paginate(10);
                 $single_category = "All Products";
                 return view('frontend.products',compact('categories','products','single_category'));
+            }else if($slug == 'featured'){
+                $categories = Category::where('status', 1)->Orderby('id','desc')->get();
+                $products = Product::where('status', 1)->where('feature_product', 1)->Orderby('id','desc')->paginate(20);
+                $single_category = "All Products";
+                return view('frontend.products',compact('categories','products','single_category'));
+            }else{
+                $categories = Category::where('status', 1)->Orderby('id','desc')->get();
+                $single_category = Category::where('slug', $slug)->first();
+                $products = Product::where('status', 1)->where('category_id', $single_category['id'])->Orderby('id','desc')->paginate(10);
             }
-            $categories = Category::where('status', 1)->Orderby('id','desc')->get();
-            $single_category = Category::where('slug', $slug)->first();
-            $products = Product::where('status', 1)->where('category_id', $single_category['id'])->Orderby('id','desc')->paginate(10);
             return view('frontend.products',compact('categories','products','single_category'));
         }  catch (\Exception $e) {
             \Log::error( $e->getMessage() );

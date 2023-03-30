@@ -307,15 +307,20 @@ main .content {
   position: relative;
   font-size: 18px;
 }
-.add_cart_active:before{
-  content: '';
+.add_cart_active span {
   position: absolute;
-  right: 0;
-  top: 0;
-  width:6px;
-  height: 6px;
-  background: #FF0000;
+  right: -5px;
+  top: -5px;
+  width: 16px;
+  height: 16px;
+  background: #fe4c4c;
   border-radius: 50%;
+  font-size: 8px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
 }
 .login{
   border-radius: 0px;
@@ -2213,4 +2218,56 @@ main .content {
 
 .active-wishlist-cart{
   color: #fe4c4c !important;
+}
+
+.search_dropdown {
+  display: block;
+  width: 400px;
+  position: absolute;
+  list-style: none;
+  background: #ffffff;
+  border-radius: 0 0 10px 10px;
+  padding: 0px;
+  margin: 0;
+  box-shadow: 0 20px 63px rgb(0 0 0 / 25%);
+}
+
+.search_dropdown li a {
+  color: var(--text-color);
+  text-decoration: none;
+  padding: 10px;
+  width: 100%;
+  border-bottom: 1px solid rgb(0 0 0 / 10%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: all ease-in 0.3s;
+}
+.search_dropdown li a span {
+  width: 45px;
+  height: 45px;
+  display: inline-block;
+  margin-right: 6px;
+}
+.search_dropdown li a span img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.search_dropdown li a h5 {
+  font-size: 16px;
+  margin-bottom: 1px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.search_dropdown li a small {
+  color: var(--main-color);
+}
+.search_dropdown li a:hover {
+  padding-left: 15px;
+  transition: all ease-in 0.3s;
+  background: rgb(0 200 184 / 5%);
 }

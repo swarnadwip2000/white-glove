@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     @yield('meta')
     <title>@yield('title')</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
@@ -18,6 +19,8 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="{{asset('frontend_assets/css/style.css')}}" rel="stylesheet">
     <link href="{{asset('frontend_assets/css/responsive.css')}}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- Custom styles for this template -->
     @stack('styles')
   </head>
@@ -72,6 +75,36 @@
             toastr.warning("{{ session('warning') }}");
         @endif
     </script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#search-product').keyup(function() {
+         
+          var query = $(this).val();
+             $.ajax({
+                url: "{{route('product.search')}}",
+                method: "POST",
+                data: {
+                    query: query,
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                     $('.search_dropdown').fadeIn();
+                     $('.search_dropdown').html(response.view);
+                 }
+            });
+        });
+        $(document).on('click', 'li', function() {
+            $('#search-product').val($(this).text());
+             $('.search_dropdown').fadeOut();
+        });
+    });
+  </script>
+
+    
     @stack('scripts')
     </body>
   </html>    

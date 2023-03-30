@@ -1,3 +1,8 @@
+
+@php
+    use App\Helpers\Wish;
+    use App\Helpers\AddToCart;
+@endphp
 <div class="main_menu_hdr">
     <div class="container-fluid">
       <div class="navigation navbar">
@@ -30,18 +35,27 @@
           <div class="d-none d-lg-block">
             <div class="search_box">
               <div class="search_field">                    
-                <button type="submit"><i class="fas fa-search"></i></button>
-                <input type="text" class="input" placeholder="search here products">
+                <input type="text" class="input" id="search-product"  placeholder="search here products">
+                  <button type="submit"><i class="fas fa-search"></i></button>
               </div>
             </div>
+            <ul class="search_dropdown">
+              @include('frontend.includes.search-dropdown')
+            </ul>
           </div> 
           <div class="right_login">
             <div class="d-flex align-items-center justify-content-between">
               <div class="icon_c ms-2">
-                <a href="{{ route('wishlist') }}" class="add_cart_active"><i class="fa-solid fa-heart"></i></a>
+                @if (Auth::check() && Auth::user()->hasRole('CUSTOMER'))
+                <a href="{{ route('wishlist') }}" class="add_cart_active">
+                  <span id="wish-item">{{ Wish::wishListCountAll() }}</span>
+                  <i class="fa-solid fa-heart"></i></a>
+                @endif
               </div>
               <div class="icon_c ms-2">
-                <a href="{{ route('cart') }}" class="add_cart_active"><i class="fa-solid fa-bag-shopping"></i></a>
+                <a href="{{ route('cart') }}" class="add_cart_active">
+                  <span id="cart-item">{{ AddToCart::CountCart() }}</span>
+                  <i class="fa-solid fa-bag-shopping"></i></a>
               </div>
               
               <div class="login">
@@ -62,3 +76,5 @@
       </div>
     </div>
   </div>
+
+ 

@@ -56,8 +56,8 @@ White Globe | HOME
               <div class="inner_search_box">
                 <div class="search_box">
                   <div class="search_field">                        
-                    <input type="text" class="input" placeholder="Search" id="search-product">
-                    <button type="submit"><i class="fas fa-search"></i></button>
+                    <input type="text" class="input" placeholder="Search" id="filter_product">
+                    <button type="submit" class="product-search"><i class="fas fa-search"></i></button>
                   </div>
                 </div>
               </div>
@@ -66,42 +66,16 @@ White Globe | HOME
               <div class="d-flex align-items-center justify-content-end">
                 <div class="me-2">Sort By: </div>
                 <div class="all_select">
-                  <select class="form-select" aria-label="">
-                    <option selected="">Popular</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                  <select class="form-select sort-by" aria-label="">
+                    <option selected="" value="all-product" {{ Request::is('product/all-products*') ? 'selected' : '' }}>All-product</option>
+                    <option value="featured" {{ Request::is('product/featured*') ? 'selected' : '' }}>Featured-product</option>
+                    <option value="best-selling">Best-selling</option>
                   </select>
                 </div>
               </div>                    
             </div>
           </div>
-          @if($products->count() > 0)
-          <div class="row justify-content-center align-items-center mb-3">
-            <div class="col-xl-12 col-lg-12 text-center">
-              <div class="silver_age">
-                @if( $single_category == 'All Products')
-                <h4>{{ $single_category }}</h4>
-                @else
-                <h4>{{ $single_category['name'] }}</h4>
-                @endif
-                <p>Showing 1 – 9 Packages of {{$products->count()}} results for “@if( $single_category == 'All Products') {{ $single_category }} @else {{$single_category['name']}} @endif”</p>
-                
-              </div>
-            </div>
-          </div>
-          <div class="product-search"> 
-          @include('frontend.product-search')
-          </div>
-
-          <div class="">
-            {!! $products->links() !!}
-          </div>
-          @else
-          <div>
-            <h4>No Product Found</h4>
-          </div>
-          @endif
+          <div id="product-filter">@include('frontend.product-filter')</div>
         </div>
       </div>
     </div>
@@ -110,7 +84,8 @@ White Globe | HOME
   @endsection
 
   @push('scripts')
-  <script>
+<script>
+  $(document).ready(function() {
   $('.add-cart').on('click', function(){
     var route = $(this).data('route');
     var quantity = 1;
@@ -128,37 +103,58 @@ White Globe | HOME
             // console.log(response);
             if(response.status == 'success'){
                 $('.cart-disable-'+product_id).html('<a href="{{ route('cart') }}"><i class="fa-solid fa-cart-shopping"></i>Go to Cart</a>');
+                $('#cart-item').html(quantity);
                 toastr.success(response.message);
             } else {
                 toastr.error(response.message);
             }
         }
     });
+  });
+
+  $('.add-wishlist').on('click', function(){
+      var id = $(this).data('wish');
+      var url = "{{ route('update-wishlist') }}";
+      
+      $.ajax({
+        url: url,
+        type: "POST",
+        data: {
+          "_token": "{{ csrf_token() }}",
+          "id": id
+        },
+        success: function(response){
+          if (response.action == 'added') {
+            $('a[data-wish='+id+']').addClass('active-wishlist');
+            toastr.success('Product added to wishlist successfully');
+              } else {
+            $('a[data-wish='+id+']').removeClass('active-wishlist');       
+            toastr.success('Product removed from wishlist successfully');       
+          }
+        }
+      });
+    });
 });
 </script>
 
+
+
 <script>
-  $(document).ready(function() {
-      $('#search-product').keyup(function() {
-          var query = $(this).val();
-          var _token = $('input[name="_token"]').val();
-          $.ajax({
-              url: "{{ route('product.search') }}",
-              method: "POST",
-              data: {
-                  query: query,
-                  _token: _token
-              },
-              success: function(response) {
-                  $('.search_dropdown').fadeIn();
-                  $('.search_dropdown').html(response.view);
-              }
-          });
-      });
-      $(document).on('click', 'li', function() {
-          $('#search-product').val($(this).text());
-          $('.search_dropdown').fadeOut();
-      });
-  });
+  $('.product-search').on('click', function(){   
+   var product = $('#filter_product').val();
+    
+   $.ajax({
+        url: "{{ route('product.filter') }}",
+        method: "GET",
+        data: {
+          product: product,
+        },
+        success: function(resp) {
+            $('#product-filter').html(resp.view);
+        }
+    });
+});
 </script>
+
+
 @endpush

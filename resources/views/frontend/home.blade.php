@@ -33,7 +33,7 @@ White Globe | HOME
               <div class="banner_right_img">
                 <a href="">
                   <img src="" alt="" data-lazy="{{ Storage::url($category['image']) }}" class="full-image animated" data-animation-in="fadeInUp" data-delay-in="0.3" />
-                  <span class="full-image animated" data-animation-in="fadeInUp" data-delay-in="0.5"><b>Hooded Cloak Battle</b> of the Gods Fujin and Raijin</span>
+                  <span class="full-image animated" data-animation-in="fadeInUp" data-delay-in="0.5"><b>{{ $category->name }}</b></span>
                 </a>
               </div>
               {{-- <div class="banner_right_img">
@@ -152,7 +152,7 @@ White Globe | HOME
           </div>
         </div> 
         <div class="col-md-6 col-5 text-end" data-aos="fade-up" data-aos-duration="1000">
-          <a class="red_btn" href=""><span>view all</span></a>
+          <a class="red_btn" href="{{ route('product',['slug'=> 'featured']) }}"><span>view all</span></a>
         </div>            
         <div class="product_slider mt-4">
           @foreach($featured_products as $product)
@@ -563,4 +563,6 @@ White Globe | HOME
 
 
 </script>
+
+
 @endpush
