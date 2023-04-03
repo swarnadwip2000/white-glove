@@ -57,6 +57,8 @@
                   <span id="cart-item">{{ AddToCart::CountCart() }}</span>
                   <i class="fa-solid fa-bag-shopping"></i></a>
               </div>
+
+              
               
               <div class="login">
                 @if(Auth::check())

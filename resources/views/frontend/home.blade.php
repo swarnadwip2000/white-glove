@@ -185,7 +185,8 @@ White Globe | HOME
                     <li><i class="fa-solid fa-star"></i></li>
                   </ul>
                 </div>
-                <h3>Price ${{ $product['price'] }}</h3>
+                <div class="price my-2"><b>Price: ${{ $product['discounted_price'] }}</b>
+                  <strike class="original-price">${{ $product['price'] }}</strike></div>
                 <div class="cart">
                   @if(AddToCart::CheckCartItem($product['id']) > 0)
                     <a href="{{ route('cart') }}"><i class="fa-solid fa-cart-shopping"></i></a>
@@ -552,6 +553,8 @@ White Globe | HOME
                     // console.log(response);
                     if(response.status == 'success'){
                         $('.cart-disable-'+product_id).html('<a href="{{ route('cart') }}"><i class="fa-solid fa-cart-shopping"></i>Go to Cart</a>');
+                        console.log(response.count);
+                        $('#cart-item').text(response.count);
                         toastr.success(response.message);
                     } else {
                         toastr.error(response.message);

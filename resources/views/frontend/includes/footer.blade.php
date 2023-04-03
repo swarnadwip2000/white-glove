@@ -19,8 +19,8 @@
               <ul>
                 <li><a href="{{ route('home') }}">Home</a></li>
                 <li><a href="{{ route('about') }}">About us</a></li>
-                <li><a href="">SHOP</a></li>
-                <li><a href="">CONTACT </a></li>
+                <li><a href="{{ route('product',['slug'=> 'all-products']) }}">SHOP</a></li>
+                <li><a href="{{ route('contact') }}">CONTACT </a></li>
                 <li><a href="">offer</a></li>
                 <li><a href="{{ route('blogs') }}">BLOG</a></li>
                 <li><a href="">GALLERY</a></li>
@@ -50,9 +50,11 @@
                 </div>
                 <div class="quick_links_ul">
                   <ul>
-                    <li><a href="">Registration</a></li>
-                    <li><a href="">basket</a></li>
-                    <li><a href="">wish list</a></li>
+                    <li><a href="{{ route('register') }}">Registration</a></li>
+                    <li><a href="{{ route('cart') }}">basket</a></li>
+                    @if (Auth::check() && Auth::user()->hasRole('CUSTOMER'))
+                    <li><a href="{{ route('wishlist') }}">wish list</a></li>
+                    @endif
                   </ul>
                 </div>
               </div>

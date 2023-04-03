@@ -91,7 +91,12 @@ class CartController extends Controller
             $cart->product_id = $data['product_id'];
             $cart->quantity = $data['quantity'];
             $cart->save();
-            return response()->json(['status' => 'success', 'message' => 'Product has been added in cart']);
+            if (Auth::check()) {
+                $cart_count = Cart::where('user_id', Auth::user()->id)->count();
+            } else {
+                $cart_count = Cart::where('session_id', $session_id)->count();
+            }
+            return response()->json(['status' => 'success', 'count' => $cart_count, 'message' => 'Product has been added in cart']);
         }
         return view('frontend.cart');
     }
@@ -204,7 +209,14 @@ class CartController extends Controller
                 $session_id = Session::get('session_id');
                 $userCart = Cart::where('session_id', $session_id)->get();
             }
-            return response()->json(['view' => (string)View::make('frontend.cart-items')->with(compact('userCart'))]);
+
+            if (Auth::check()) {
+                $cart_count = Cart::where('user_id', Auth::user()->id)->count();
+            } else {
+                $cart_count = Cart::where('session_id', $session_id)->count();
+            }
+            
+            return response()->json(['view' => (string)View::make('frontend.cart-items')->with(compact('userCart','cart_count')) ,'count' => $cart_count]);
         }
     }
 

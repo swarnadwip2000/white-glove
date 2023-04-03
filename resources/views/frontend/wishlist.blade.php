@@ -117,6 +117,7 @@ White Globe | HOME
                     // console.log(response);
                     if(response.status == 'success'){
                         $('.cart-disable-'+product_id).html('<a href="{{ route('cart') }}"><i class="fa-solid fa-cart-shopping"></i>Go to Cart</a>');
+                        $('#cart-item').text(response.count);
                         toastr.success(response.message);
                     } else {
                         toastr.error(response.message);

@@ -244,6 +244,7 @@ White Globe | HOME
                     console.log(response);
                     if(response.status == 'success'){
                         $('#cart-disable').html('<a href="{{ route('cart') }}" class="red_btn black_bg"><span><i class="fa-solid fa-cart-shopping"></i> Go to Cart</span></a>');
+                        $('#cart-item').text(response.count);
                         toastr.success(response.message);
                     } else {
                         toastr.error(response.message);

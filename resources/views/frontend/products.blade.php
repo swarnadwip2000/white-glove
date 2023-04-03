@@ -67,9 +67,9 @@ White Globe | HOME
                 <div class="me-2">Sort By: </div>
                 <div class="all_select">
                   <select class="form-select sort-by" aria-label="">
-                    <option selected="" value="all-product" {{ Request::is('product/all-products*') ? 'selected' : '' }}>All-product</option>
-                    <option value="featured" {{ Request::is('product/featured*') ? 'selected' : '' }}>Featured-product</option>
-                    <option value="best-selling">Best-selling</option>
+                    <option selected="" value="popularity">Popularity</option>
+                    <option value="1">Price- Low to High</option>
+                    <option value="0">Price- High to Low</option>
                   </select>
                 </div>
               </div>                    
@@ -103,7 +103,7 @@ White Globe | HOME
             // console.log(response);
             if(response.status == 'success'){
                 $('.cart-disable-'+product_id).html('<a href="{{ route('cart') }}"><i class="fa-solid fa-cart-shopping"></i>Go to Cart</a>');
-                $('#cart-item').html(quantity);
+                $('#cart-item').text(response.count);
                 toastr.success(response.message);
             } else {
                 toastr.error(response.message);
@@ -137,17 +137,19 @@ White Globe | HOME
 });
 </script>
 
-
-
 <script>
   $('.product-search').on('click', function(){   
    var product = $('#filter_product').val();
+   var sort = $('.sort-by').val();
+   var category = (location.href.substring(location.href.lastIndexOf('/') + 1));
     
    $.ajax({
-        url: "{{ route('product.filter') }}",
+        url: "{{ route('product.sorting') }}",
         method: "GET",
         data: {
           product: product,
+          sort: sort,
+          category: category,
         },
         success: function(resp) {
             $('#product-filter').html(resp.view);
@@ -156,5 +158,26 @@ White Globe | HOME
 });
 </script>
 
+<script>
+  $('.sort-by').on('change', function(){   
+    var sort = $('.sort-by').val();  
+    var product = $('#filter_product').val();
+    var category = (location.href.substring(location.href.lastIndexOf('/') + 1));
+    
+    $.ajax({
+        url: "{{ route('product.sorting') }}",
+        method: "GET",
+        data: {
+          sort: sort,
+          product: product,
+          category: category,
+        },
+        success: function(respons) {
+          
+          $('#product-filter').html(respons.view);
+        }
+    });   
+});
+</script>
 
 @endpush

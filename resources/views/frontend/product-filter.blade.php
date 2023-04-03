@@ -96,63 +96,64 @@
     </div>
 @else
     <div>
-        <h4>No Product Found</h4>
+        <h4>No Product Found...</h4>
     </div>
 @endif
 
 
 
-    <script>
-        $(document).ready(function() {
-            $('.add-cart').on('click', function() {
-                var route = $(this).data('route');
-                var quantity = 1;
-                var product_id = $(this).data('id');
-                // alert(product_id);   
-                $.ajax({
-                    url: route,
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        quantity: quantity,
-                        product_id: product_id
-                    },
-                    success: function(response) {
-                        // console.log(response);
-                        if (response.status == 'success') {
-                            $('.cart-disable-' + product_id).html(
-                                '<a href="{{ route('cart') }}"><i class="fa-solid fa-cart-shopping"></i>Go to Cart</a>'
-                                );
-                            toastr.success(response.message);
-                        } else {
-                            toastr.error(response.message);
-                        }
-                    }
-                });
-            });
-
-            $('.add-wishlist').on('click', function(){
-            var id = $(this).data('wish');
-            var url = "{{ route('update-wishlist') }}";
-            
+<script>
+    $(document).ready(function() {
+        $('.add-cart').on('click', function() {
+            var route = $(this).data('route');
+            var quantity = 1;
+            var product_id = $(this).data('id');
+            // alert(product_id);   
             $.ajax({
-                url: url,
-                type: "POST",
+                url: route,
+                type: 'POST',
                 data: {
-                "_token": "{{ csrf_token() }}",
-                "id": id
+                    _token: '{{ csrf_token() }}',
+                    quantity: quantity,
+                    product_id: product_id
                 },
-                success: function(response){
-                if (response.action == 'added') {
-                    $('a[data-wish='+id+']').addClass('active-wishlist');
-                    toastr.success('Product added to wishlist successfully');
+                success: function(response) {
+                    // console.log(response);
+                    if (response.status == 'success') {
+                        $('.cart-disable-' + product_id).html(
+                            '<a href="{{ route('cart') }}"><i class="fa-solid fa-cart-shopping"></i>Go to Cart</a>'
+                            );
+                            $('#cart-item').text(response.count);
+                        toastr.success(response.message);
                     } else {
-                    $('a[data-wish='+id+']').removeClass('active-wishlist');       
-                    toastr.success('Product removed from wishlist successfully');       
+                        toastr.error(response.message);
+                    }
                 }
-                }
-            });
             });
         });
-    </script>
+
+        $('.add-wishlist').on('click', function(){
+        var id = $(this).data('wish');
+        var url = "{{ route('update-wishlist') }}";
+        
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {
+            "_token": "{{ csrf_token() }}",
+            "id": id
+            },
+            success: function(response){
+            if (response.action == 'added') {
+                $('a[data-wish='+id+']').addClass('active-wishlist');
+                toastr.success('Product added to wishlist successfully');
+                } else {
+                $('a[data-wish='+id+']').removeClass('active-wishlist');       
+                toastr.success('Product removed from wishlist successfully');       
+            }
+            }
+        });
+        });
+    });
+</script>
  

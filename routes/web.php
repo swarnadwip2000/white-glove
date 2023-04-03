@@ -48,7 +48,7 @@ Route::post('/forget-password-check', [ForgotPasswordController::class, 'forgetP
 Route::get('/reset-password/{id}/{token}', [ForgotPasswordController::class, 'resetPassword'])->name('reset.password'); // reset password
 Route::post('/reset-password-check', [ForgotPasswordController::class, 'resetPasswordCheck'])->name('reset.password.check'); // reset password check
 Route::post('/product-search', [ProductController::class, 'productSearch'])->name('product.search');
-Route::get('/product-filter', [ProductController::class, 'productFilter'])->name('product.filter'); // product filter
+Route::get('/product-sort', [ProductController::class, 'productSort'])->name('product.sorting'); // product sort
 
 Route::middleware('customer')->group(function () {
     Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist'); // category wise product

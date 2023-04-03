@@ -151,6 +151,7 @@
                 },
                 success: function(resp) {
                     $('#cart-items').html(resp.view);
+                    $('#cart-item').text(resp.count);
                     toastr.success('Product removed from cart');
                 }
             });
