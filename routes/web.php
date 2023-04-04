@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\OfferController;
+use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\ContactUsController as AdminContactUsController;
 use App\Http\Controllers\Frontend\CmsController;
 use App\Http\Controllers\Frontend\AuthController;
@@ -16,6 +19,8 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Frontend\ForgotPasswordController;
 use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Frontend\BlogController as FrontendBlogController;
+use App\Http\Controllers\Frontend\ContactUsController;
 
 
 
@@ -29,6 +34,8 @@ Route::get('clear', function () {
 Route::get('/', [CmsController::class, 'home'])->name('home');
 Route::get('/about', [CmsController::class, 'about'])->name('about');
 Route::get('/contact', [CmsController::class, 'contact'])->name('contact');
+Route::get('/offer',[CmsController::class, 'offer'])->name('offer');
+Route::post('/user-contactus-submit', [ContactUsController::class, 'addContact'])->name('add-to-contactus');
 Route::get('/product/{slug}', [CmsController::class, 'products'])->name('product');
 Route::get('/product-detail/{slug}/{id}', [CmsController::class, 'productDetail'])->name('product-detail');
 
@@ -36,7 +43,8 @@ Route::get('/cart', [CartController::class, 'cart'])->name('cart');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/register', [AuthController::class, 'register'])->name('register');
-Route::get('/blogs', [CmsController::class, 'blogs'])->name('blogs');
+Route::get('/blogs/{slug?}/{id?}', [FrontendBlogController::class, 'blogs'])->name('blogs');
+Route::get('/blog-detail/{slug}/{id}', [FrontendBlogController::class, 'blogDetail'])->name('blog-detail');
 Route::post('/register-store', [AuthController::class, 'registerStore'])->name('register.store');
 Route::post('/user-login-check', [AuthController::class, 'loginCheck'])->name('login.check');
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
@@ -83,6 +91,9 @@ Route::group(['prefix' => 'admin'], function () {
             'customers' => CustomerController::class,
             'categories' => CategoryController::class,
             'products' => AdminProductController::class,
+            'blogs' => BlogController::class,
+            'blog-categories' => BlogCategoryController::class,
+            'offers' => OfferController::class,
         ]);
         //  Category Routes
         Route::get('/changeCategoryStatus', [CategoryController::class, 'changeCategoriesStatus'])->name('categories.change-status');
@@ -98,6 +109,19 @@ Route::group(['prefix' => 'admin'], function () {
         //  Product Routes
         Route::get('/changeProductsStatus', [AdminProductController::class, 'changeProductsStatus'])->name('products.change-status');
         Route::get('/changeFeaturedProduct', [AdminProductController::class, 'changeFeaturedProduct'])->name('products.featured-product');
+
+        //Blog category routes
+        Route::prefix('blog-categories')->group(function () {
+            Route::get('/delete/{id}', [BlogCategoryController::class, 'delete'])->name('blog-categories.delete');
+            Route::post('/update/', [BlogCategoryController::class, 'update'])->name('blog-categories.update');
+        });
+
+        //Blog routes
+        Route::prefix('blogs')->group(function () {
+            Route::get('/delete/{id}', [BlogController::class, 'delete'])->name('blogs.delete');
+            Route::post('/update/', [BlogController::class, 'update'])->name('blogs.update');
+        });
+        Route::get('/changeBlogStatus', [BlogController::class, 'changeBlogStatus'])->name('blogs.change-status');
 
         //contact us
         Route::get('/contact-us', [AdminContactUsController::class, 'contactUs'])->name('admin.contact-us');

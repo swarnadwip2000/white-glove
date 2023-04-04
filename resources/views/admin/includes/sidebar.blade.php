@@ -67,6 +67,29 @@
                     <a href="{{ route('admin.contact-us') }}" ><i class="la la-phone"></i> <span>Contact Us</span></a>                 
                 </li>
 
+                <li class="submenu">
+                    <a href="#" class="{{ Request::is('admin/blogs*') || Request::is('admin/blog-categories*') ? 'active' : ' ' }}"><i class="la la-cubes"></i> <span>Blog</span> <span
+                            class="menu-arrow"></span></a>
+                    <ul style="display: none;">
+                        <li class="{{ Request::is('admin/blog-categories*') ? 'active' : ' ' }}">
+                            <a href="{{ route('blog-categories.index') }}">Category</a>
+                        </li>
+                        <li class="{{ Request::is('admin/blogs*') ? 'active' : ' ' }}">
+                            <a href="{{ route('blogs.index') }}">List</a>
+                        </li>           
+                    </ul>
+                </li>
+
+                <li class="submenu">
+                    <a href="#" class="{{ Request::is('admin/offers*')  ? 'active' : ' ' }}"><i class="la la-cubes"></i> <span>Offer</span> <span
+                            class="menu-arrow"></span></a>
+                    <ul style="display: none;">
+                        <li class="{{ Request::is('admin/offers*') ? 'active' : ' ' }}">
+                            <a href="{{ route('offers.index') }}">List</a>
+                        </li>         
+                    </ul>
+                </li>
+
                
                 {{-- <li class="{{ Request::is('admin/members*') ? 'active' : ' ' }}">
                     <a href="{{ route('user.index') }}"><i class="la la-users"></i> <span>Members</span></a>

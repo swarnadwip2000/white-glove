@@ -37,7 +37,7 @@ class ProductController extends Controller
                 }else{
 
                     $products = Product::where('name' , 'LIKE' , "%{$product_name}%")->where('category_id',$category->id)->orderBy('id', 'desc')->paginate(10);
-                }   
+                }  
             
             }else{
                 if($request->sort == '1')
@@ -58,6 +58,7 @@ class ProductController extends Controller
 
                     $products = Product::where('name' , 'LIKE' , "%{$product_name}%")->orderBy('id', 'desc')->paginate(10);
                 } 
+                
             }
             $count = Product::where('name' , 'LIKE' , "%{$product_name}%")->count();
             $categories = Category::orderBy('id', 'desc')->get();

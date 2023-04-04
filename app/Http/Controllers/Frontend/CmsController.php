@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\Blog;
 use Illuminate\Http\Request;
 
 class CmsController extends Controller
@@ -15,7 +16,8 @@ class CmsController extends Controller
     {
         $categories = Category::where('status', 1)->Orderby('id','desc')->get();
         $featured_products = Product::where('status', 1)->where('feature_product', 1)->Orderby('id','desc')->get();
-        return view('frontend.home',compact('categories','featured_products'));
+        $blogs = Blog::where('status',1)->orderby('id', 'desc')->get();
+        return view('frontend.home',compact('categories','featured_products','blogs'));
     }
 
     public function about()
@@ -86,10 +88,12 @@ class CmsController extends Controller
         return view('frontend.wishlist');
     }
 
-    public function blogs()
+    public function offer()
     {
-        return view('frontend.blogs');
+        return view('frontend.offer');  
     }
+
+    
 
    
 }

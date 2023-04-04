@@ -232,7 +232,7 @@ White Globe | HOME
           </div>
         </div> 
         <div class="col-md-6 col-5 text-end" data-aos="fade-up" data-aos-duration="1000">
-          <a class="red_btn" href=""><span>View All</span></a>
+          <a class="red_btn" href="{{ route('offer') }}"><span>View All</span></a>
         </div>            
         <div class="offer_slider mt-4">
           <div class="offer_slid">
@@ -433,13 +433,36 @@ White Globe | HOME
           </div>
         </div> 
         <div class="col-md-6 col-5 text-end" data-aos="fade-up" data-aos-duration="1000">
-          <a class="red_btn" href=""><span>View All</span></a>
+          <a class="red_btn" href="{{ route('blogs') }}"><span>View All</span></a>
         </div>
       </div>
     </div>
     <div class="bg_blog">
       <div class="blog_slider">
+        @foreach($blogs as $blog)
         <div class="blog_slid">
+          <div class="blog_box">
+            <div class="row align-items-center">
+              <div class="col-md-8 order-2 order-md-1">
+                <div class="blog_text">
+                  <h4><a href="{{ route('blog-detail',['slug' => $blog['slug'], 'id' => encrypt($blog['id'])]) }}">{{ $blog->name }}</a></h4>
+                  <span>{{date('d M, Y',strtotime($blog->updated_at))}}</span>
+                  <p>{!! Str::limit($blog->description, 200, ' ...') !!}</p>
+                  <a href="{{ route('blog-detail',['slug' => $blog['slug'], 'id' => encrypt($blog['id'])]) }}" class="read_more">READ MORE</a>
+                </div>
+              </div>
+              <div class="col-md-4 order-1 order-md-2">
+                <div class="blog_img">
+                  <a href="{{ route('blog-detail',['slug' => $blog['slug'], 'id' => encrypt($blog['id'])]) }}">
+                    <img src="{{ Storage::url($blog->image) }}" alt=""/>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        @endforeach
+        {{-- <div class="blog_slid">
           <div class="blog_box">
             <div class="row align-items-center">
               <div class="col-md-8 order-2 order-md-1">
@@ -480,28 +503,7 @@ White Globe | HOME
               </div>
             </div>
           </div>
-        </div>
-        <div class="blog_slid">
-          <div class="blog_box">
-            <div class="row align-items-center">
-              <div class="col-md-8 order-2 order-md-1">
-                <div class="blog_text">
-                  <h4><a href="">Reaper Skull Angel and Demon 3D All Over Printed</a></h4>
-                  <span>27 th Nov’22</span>
-                  <p>Lorem ipsum dolor sit amet consectetur. Lacus egestas odio ut enim. Mus diam rhoncus viverra varius amet tellus orci. Enim vestibulum ornare vulputate ornare egestas purus dolor.</p>
-                  <a href="" class="read_more">READ MORE</a>
-                </div>
-              </div>
-              <div class="col-md-4 order-1 order-md-2">
-                <div class="blog_img">
-                  <a href="">
-                    <img src="{{asset('frontend_assets/images/offers.jpg')}}" alt=""/>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>            
+        </div>             --}}
       </div>
     </div>        
   </section> 

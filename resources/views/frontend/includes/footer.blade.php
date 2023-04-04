@@ -21,7 +21,7 @@
                 <li><a href="{{ route('about') }}">About us</a></li>
                 <li><a href="{{ route('product',['slug'=> 'all-products']) }}">SHOP</a></li>
                 <li><a href="{{ route('contact') }}">CONTACT </a></li>
-                <li><a href="">offer</a></li>
+                <li><a href="{{ route('offer') }}">offer</a></li>
                 <li><a href="{{ route('blogs') }}">BLOG</a></li>
                 <li><a href="">GALLERY</a></li>
                 <li><a href="">STORE POLICY</a></li>
