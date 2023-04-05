@@ -92,6 +92,7 @@ White Globe | HOME
                 // console.log(response);
                 if(response.status == true){
                     $('#remove-'+product_id).remove();
+                    $('#wish-item').text(response.count); 
                     toastr.success('Product removed from wishlist');
                 } else {
                     toastr.error('Something went wrong');

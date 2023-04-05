@@ -518,9 +518,11 @@ White Globe | HOME
         success: function(response){
           if (response.action == 'added') {
             $('a[data-wish='+id+']').addClass('active-wishlist');
+            $('#wish-item').text(response.count);
             toastr.success('Product added to wishlist successfully');
               } else {
-            $('a[data-wish='+id+']').removeClass('active-wishlist');       
+            $('a[data-wish='+id+']').removeClass('active-wishlist');   
+            $('#wish-item').text(response.count);    
             toastr.success('Product removed from wishlist successfully');       
           }
         }

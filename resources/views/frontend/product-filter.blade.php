@@ -5,24 +5,7 @@
 @endphp
 
 @if ($products->count() > 0)
-    <div class="row justify-content-center align-items-center mb-3">
-        <div class="col-xl-12 col-lg-12 text-center">
-            <div class="silver_age">
-                @if ($single_category == 'All Products')
-                    <h4>{{ $single_category }}</h4>
-                @else
-                    <h4>{{ $single_category['name'] }}</h4>
-                @endif
-                <p>Showing {{ $products->currentPage() }} – {{ $products->lastPage() }} Packages of
-                    {{ $products->count() }} results for “@if ($single_category == 'All Products')
-                        {{ $single_category }}
-                    @else
-                        {{ $single_category['name'] }}
-                    @endif”</p>
-
-            </div>
-        </div>
-    </div>
+   
 
     @if (count($products) > 0)
         <div class="row row-cols-1 row-cols-xxl-5 row-cols-xl-4 row-cols-lg-2">
@@ -50,7 +33,7 @@
                         </div>
                         <div class="card_text">
                             <h4><a
-                                    href="{{ route('product-detail', ['slug' => $product['slug'], 'id' => encrypt($product['id'])]) }}">{{ $product['name'] }}</a>
+                                    href="{{ route('product-detail', ['slug' => $product['slug'], 'id' => encrypt($product['id'])]) }}">{!! Str::limit($product->name, 20, ' ...') !!}</a>
                             </h4>
                             <div class="card_star">
                                 <ul>
@@ -146,9 +129,11 @@
             success: function(response){
             if (response.action == 'added') {
                 $('a[data-wish='+id+']').addClass('active-wishlist');
+                $('#wish-item').text(response.count);
                 toastr.success('Product added to wishlist successfully');
                 } else {
-                $('a[data-wish='+id+']').removeClass('active-wishlist');       
+                $('a[data-wish='+id+']').removeClass('active-wishlist'); 
+                $('#wish-item').text(response.count);      
                 toastr.success('Product removed from wishlist successfully');       
             }
             }

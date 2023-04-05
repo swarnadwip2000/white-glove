@@ -30,11 +30,13 @@ class WishlistController extends Controller
                 $wishlist->user_id = Auth::user()->id;
                 $wishlist->product_id = $data['id'];
                 $wishlist->save();
-                return response()->json(['status'=>true, 'action'=>'added']);
+                $count = Wishlist::where('user_id', Auth::user()->id)->count();
+                return response()->json(['status'=>true, 'action'=>'added','count'=>$count ]);
             } else {
                 $wishlist = Wishlist::where('user_id', Auth::user()->id)->where('product_id', $data['id'])->first();
                 $wishlist->delete();
-                return response()->json(['status'=>true, 'action'=>'removed']);
+                $count = Wishlist::where('user_id', Auth::user()->id)->count();
+                return response()->json(['status'=>true, 'action'=>'removed','count'=>$count]);
             }
          }
     }
@@ -43,6 +45,7 @@ class WishlistController extends Controller
     {
         $wishlist = Wishlist::where('user_id', Auth::user()->id)->where('product_id', $id)->first();
         $wishlist->delete();
-        return response()->json(['status'=>true, 'action'=>'removed']);
+        $count = Wishlist::where('user_id', Auth::user()->id)->count();
+        return response()->json(['status'=>true, 'action'=>'removed','count'=>$count]);
     }
 }

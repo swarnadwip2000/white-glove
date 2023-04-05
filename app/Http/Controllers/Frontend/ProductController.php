@@ -13,7 +13,7 @@ class ProductController extends Controller
 
 
     public function productSort(Request $request)
-    {   
+    {  
         
         try{   
             $product_name = $request->product;
@@ -23,6 +23,7 @@ class ProductController extends Controller
                 {
                     $products = Product::query()
                     ->where('category_id',$category->id)
+                     ->where('discount','>=', $request->range)
                     ->where('name' , 'LIKE' , "%{$product_name}%")
                     ->orderByRaw('(price -((price * discount) / 100)) ASC')
                     ->paginate(10);
@@ -30,13 +31,14 @@ class ProductController extends Controller
                 }else if($request->sort == '0'){
                     $products = Product::query()
                     ->where('category_id',$category->id)
+                    ->where('discount','>=', $request->range)
                     ->where('name' , 'LIKE' , "%{$product_name}%")
                     ->orderByRaw('(price -((price * discount) / 100)) DESC')
                     ->paginate(10);
 
                 }else{
 
-                    $products = Product::where('name' , 'LIKE' , "%{$product_name}%")->where('category_id',$category->id)->orderBy('id', 'desc')->paginate(10);
+                    $products = Product::where('name' , 'LIKE' , "%{$product_name}%")->where('discount','>=', $request->range)->where('category_id',$category->id)->orderBy('id', 'desc')->paginate(10);
                 }  
             
             }else{
@@ -44,6 +46,7 @@ class ProductController extends Controller
                 {
                     $products = Product::query()
                     ->where('name' , 'LIKE' , "%{$product_name}%")
+                    ->where('discount','>=', $request->range)
                     ->orderByRaw('(price -((price * discount) / 100)) ASC')
                     ->paginate(10);
                 
@@ -51,12 +54,13 @@ class ProductController extends Controller
                 }else if($request->sort == '0'){
                     $products = Product::query()
                     ->where('name' , 'LIKE' , "%{$product_name}%")
+                    ->where('discount','>=', $request->range)
                     ->orderByRaw('(price -((price * discount) / 100)) DESC')
                     ->paginate(10);
 
                 }else{
 
-                    $products = Product::where('name' , 'LIKE' , "%{$product_name}%")->orderBy('id', 'desc')->paginate(10);
+                    $products = Product::where('name' , 'LIKE' , "%{$product_name}%")->where('discount','>=', $request->range)->orderBy('id', 'desc')->paginate(10);
                 } 
                 
             }
@@ -90,5 +94,12 @@ class ProductController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()]);
         }
+    }
+
+    public function productRangeFilter(Request $request)
+    {
+        // return $request;
+        $get_product = Product::where('discount','>=', $request->range)->get();
+
     }
 }

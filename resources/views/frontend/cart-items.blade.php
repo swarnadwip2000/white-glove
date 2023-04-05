@@ -128,9 +128,11 @@
                 success: function(response) {
                     if (response.action == 'added') {
                         $('i[data-id=' + id + ']').addClass('active-wishlist-cart');
+                        $('#wish-item').text(response.count);
                         toastr.success('Product added to wishlist');
                     } else {
                         $('i[data-id=' + id + ']').removeClass('active-wishlist-cart');
+                        $('#wish-item').text(response.count);
                         toastr.success('Product removed from wishlist');
                     }
                 }

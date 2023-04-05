@@ -59,6 +59,7 @@ Route::post('/reset-password-check', [ForgotPasswordController::class, 'resetPas
 Route::post('/product-search', [ProductController::class, 'productSearch'])->name('product.search');
 Route::get('/product-sort', [ProductController::class, 'productSort'])->name('product.sorting'); // product sort
 
+
 Route::middleware('customer')->group(function () {
     Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist'); // category wise product
     Route::post('/update-wishlist', [WishlistController::class, 'updateWishlist'])->name('update-wishlist'); // update wishlist
