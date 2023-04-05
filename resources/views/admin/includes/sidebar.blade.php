@@ -90,6 +90,22 @@
                     </ul>
                 </li>
 
+                <li class="submenu">
+                    <a href="#" class="{{ Request::is('admin/cms*') ? 'active' : ' ' }}"><i class="la la-list"></i> <span>CMS</span> <span
+                            class="menu-arrow"></span></a>
+                    <ul style="display: none;">
+                        <li class="{{ Request::is('admin/cms/home-cms*') ? 'active' : ' ' }}">
+                            <a href="{{ route('home.cms') }}">Home cms</a>
+                        </li>   
+                        <li class="{{ Request::is('admin/cms/about-cms*') ? 'active' : ' ' }}">
+                            <a href="{{ route('about.cms') }}">About Cms</a>
+                        </li>  
+                        <li class="{{ Request::is('admin/cms/contact-us-cms*') ? 'active' : ' ' }}">
+                            <a href="{{ route('contact-us.cms') }}">ContactUs Cms</a>
+                        </li>          
+                    </ul>
+                </li>
+
                
                 {{-- <li class="{{ Request::is('admin/members*') ? 'active' : ' ' }}">
                     <a href="{{ route('user.index') }}"><i class="la la-users"></i> <span>Members</span></a>

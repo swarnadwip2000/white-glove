@@ -20,9 +20,8 @@ White Globe | HOME
         <div class="slide">
             <div class="slide__content slide__content__left">
               <div class="slide__content--headings text-left">
-                <h2 class="animated title" data-animation-in="fadeInUp">Find Your<br>Next </h2>
-                <p class="animated top-title" data-animation-in="fadeInUp" data-delay-in="0.3">Our most popular and trending <b>White Glove Comics & KCI.</b> perfect 
-                  Not sure what to read now next reading mood perfectly.</p>
+                <h2 class="animated title" data-animation-in="fadeInUp">{{ $homeCms->banner_title }}</h2>
+                <p class="animated top-title" data-animation-in="fadeInUp" data-delay-in="0.3">{{ $homeCms->banner_description }}</p>
                 <div class="hero-text mb-3" data-animation-in="fadeInUp" data-delay-in="0.6">
                     <a class="red_btn" href="{{ route('product',['slug'=> 'all-products']) }}">Explore Now</a>
                 </div>
@@ -54,33 +53,22 @@ White Globe | HOME
         <div class="slide">
           <div class="slide__content slide__content__left">
             <div class="slide__content--headings text-left">
-              <h2 class="animated title" data-animation-in="fadeInUp">Find Your<br>Next </h2>
-              <p class="animated top-title" data-animation-in="fadeInUp" data-delay-in="0.3">Our most popular and trending <b>White Glove Comics & KCI.</b> perfect 
-                Not sure what to read now next reading mood perfectly.</p>
+              <h2 class="animated title" data-animation-in="fadeInUp">{{ $homeCms->banner_title }} </h2>
+              <p class="animated top-title" data-animation-in="fadeInUp" data-delay-in="0.3">{{ $homeCms->banner_description }}</p>
               <div class="hero-text mb-3" data-animation-in="fadeInUp" data-delay-in="0.6">
                   <a class="red_btn" href="{{ route('product',['slug'=> 'all-products']) }}">Explore Now</a>
               </div>
             </div>
           </div>
           <div class="banner_img">
+            @foreach($categories->take(3) as $category)
             <div class="banner_right_img">
               <a href="">
-                <img src="" alt="" data-lazy="{{ asset('frontend_assets/images/banner_img.png')}}" class="full-image animated" data-animation-in="fadeInUp" data-delay-in="0.3" />
-                <span class="full-image animated" data-animation-in="fadeInUp" data-delay-in="0.5"><b>Hooded Cloak Battle</b> of the Gods Fujin and Raijin</span>
+                <img src="" alt="" data-lazy="{{ Storage::url($category['image']) }}" class="full-image animated" data-animation-in="fadeInUp" data-delay-in="0.3" />
+                <span class="full-image animated" data-animation-in="fadeInUp" data-delay-in="0.5"><b>{{ $category->name }}</b></span>
               </a>
             </div>
-            <div class="banner_right_img">
-              <a href="">
-                <span class="full-image animated" data-animation-in="fadeInDown" data-delay-in="0.5"><b>Hooded Cloak Battle</b> of the Gods Fujin and Raijin</span>
-                <img src="" alt="" data-lazy="{{ asset('frontend_assets/images/banner_img1.png')}}" class="full-image animated" data-animation-in="fadeInDown" data-delay-in="0.3" />                      
-              </a>
-            </div>
-            <div class="banner_right_img">
-              <a href="">
-                <img src="" alt="" data-lazy="{{ asset('frontend_assets/images/banner_img2.png')}}" class="full-image animated" data-animation-in="fadeInUp" data-delay-in="0.3" />
-                <span class="full-image animated" data-animation-in="fadeInUp" data-delay-in="0.5"><b>Hooded Cloak Battle</b> of the Gods Fujin and Raijin</span>
-              </a>
-            </div>
+            @endforeach
           </div>
       </div>
         <!-- <div class="slide">
@@ -128,12 +116,12 @@ White Globe | HOME
       <div class="row">
         <div class="col-md-12">
           <div class="cannabis_tow_box">
-            <div class="can_img"><img src="{{asset('frontend_assets/images/canabi.png')}}" alt=""/></div>
+            <div class="can_img"><img src="{{ Storage::url($homeCms['section_2_image']) }}" alt=""/></div>
             <div class="position-relative">
               <div class="row justify-content-end">
                 <div class="col-lg-6">
                   <div class="heading_hp text_white">
-                    <h2>Present the "Gods & Monsters" Collection</h2>
+                    <h2>{{ $homeCms->section_2_title }}</h2>
                     <a class="sec_btn" href="{{ route('product',['slug'=> 'all-products']) }}"><span>Shop Now</span></a>
                   </div>
                 </div>                  
@@ -207,15 +195,15 @@ White Globe | HOME
   </section>
   <section class="online_book_fire">
     <div class="online_book_bg">
-      <img src="{{asset('frontend_assets/images/online_book.png')}}" alt=""/>
+      <img src="{{ Storage::url($homeCms['section_3_image']) }}" alt=""/>
     </div>
     <div class="container">
       <div class="row justify-content-end">
         <div class="col-lg-4">
           <div class="border_b">
             <div class="heading_hp text_white text-center">
-              <h2>Online Book Fairs 2022</h2>
-              <p>Lorem ipsum dolor sit amet consectetur. Lacus egestas odio ut enim. Mus diam rhoncus viverra varius amet tellus orci. Enim vestibulum ornare vulputate ornare egestas purus dolor. </p>
+              <h2>{{ $homeCms->section_3_title }}</h2>
+              <p>{!! $homeCms->section_3_description !!}</p>
               <a class="thired_btn" href="{{ route('login') }}">Create account</a>
             </div>
           </div>
@@ -232,22 +220,24 @@ White Globe | HOME
           </div>
         </div> 
         <div class="col-md-6 col-5 text-end" data-aos="fade-up" data-aos-duration="1000">
-          <a class="red_btn" href="{{ route('offer') }}"><span>View All</span></a>
+          <a class="red_btn" href="{{ route('product',['slug'=> 'all-products']) }}"><span>View All</span></a>
         </div>            
         <div class="offer_slider mt-4">
+          @foreach($offers->take(3) as $offer)
           <div class="offer_slid">
             <div class="offer_box">
               <div class="offer_img">
                 <a href="">
-                  <img src="{{asset('frontend_assets/images/offers.jpg')}}" alt=""/>
+                  <img src="{{ Storage::url($offer['image']) }}" alt=""/>
                 </a>
               </div>                  
               <div class="offer_text">
-                <h4><a href="">This month’s discount - 50%</a></h4>                    
+                <h4><a href="">{{ $offer->title }}</a></h4>                    
               </div>
             </div>
           </div>
-          <div class="offer_slid">
+          @endforeach
+          {{-- <div class="offer_slid">
             <div class="offer_box">
               <div class="offer_img">
                 <a href="">
@@ -270,7 +260,7 @@ White Globe | HOME
                 <h4><a href="">This month’s discount - 20%</a></h4>                    
               </div>
             </div>
-          </div>              
+          </div>               --}}
         </div>
       </div>
     </div>

@@ -48,7 +48,7 @@
                     <a href="{{ route('customers.index') }}" style="color: black">
                         <div class="card dash-widget">
                             <div class="card-body">
-                                <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+                                <span class="dash-widget-icon"><i class="fa fa-users"></i></span>
                                 <div class="dash-widget-info">
                                     <h3>{{ $count['customer'] }}</h3>
                                     <span>Total Customer</span>

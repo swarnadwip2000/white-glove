@@ -8,6 +8,12 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Blog;
+use App\Models\Offer;
+use App\Models\HomeCms;
+use App\Models\AboutCms;
+use App\Models\ContactUsCms;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
 
 class CmsController extends Controller
@@ -17,17 +23,22 @@ class CmsController extends Controller
         $categories = Category::where('status', 1)->Orderby('id','desc')->get();
         $featured_products = Product::where('status', 1)->where('feature_product', 1)->Orderby('id','desc')->get();
         $blogs = Blog::where('status',1)->orderby('id', 'desc')->get();
-        return view('frontend.home',compact('categories','featured_products','blogs'));
+        $homeCms = HomeCms::first();
+        $offers = Offer::where('status',1)->orderby('id', 'desc')->get();
+        return view('frontend.home',compact('categories','featured_products','blogs','homeCms','offers'));
     }
 
     public function about()
     {
-        return view('frontend.about');
+        $aboutCms = AboutCms::first();
+        return view('frontend.about',compact('aboutCms'));
     }
 
     public function contact()
     {
-        return view('frontend.contact');
+
+        $contactCms = ContactUsCms::first();
+        return view('frontend.contact',compact('contactCms'));              
     }
 
     public function products($slug)

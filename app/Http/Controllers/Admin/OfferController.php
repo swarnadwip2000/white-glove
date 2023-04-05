@@ -15,7 +15,7 @@ class OfferController extends Controller
      */
     public function index()
     {
-        $offers = Offer::where('status',1)->orderby('id', 'desc')->get();
+        $offers = Offer::orderby('id', 'desc')->get();
         return view('admin.offers.list')->with(compact('offers'));
     }
 
@@ -26,7 +26,7 @@ class OfferController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.offers.create');
     }
 
     /**
@@ -37,7 +37,31 @@ class OfferController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'offer' => 'required',
+            'title' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $offer = new Offer();
+        $offer->offer = $request->offer;
+        $offer->title = $request->title;
+        
+        if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            ]);
+            
+            $file= $request->file('image');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $image_path = $request->file('image')->store('offers', 'public');
+            $offer->image = $image_path;
+        }
+
+        $offer->save();
+
+        return redirect()->route('offers.index')
+                        ->with('message','Offer created successfully.');
     }
 
     /**
@@ -60,6 +84,8 @@ class OfferController extends Controller
     public function edit($id)
     {
         //
+        $offer = Offer::find($id);
+        return view('admin.offers.edit')->with(compact('offer'));
     }
 
     /**
@@ -69,9 +95,32 @@ class OfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      
+        $request->validate([
+            'offer' => 'required',
+            'title' => 'required',
+        ]);
+         
+        $offer = Offer::find($request->id);
+        $offer->offer = $request->offer;
+        $offer->title = $request->title;
+        if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            ]);
+            
+            $file= $request->file('image');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $image_path = $request->file('image')->store('offers', 'public');
+            $offer->image = $image_path;
+        }
+        $offer->save();
+
+        return redirect()->route('offers.index')
+                        ->with('message','Offer updated successfully');
+
     }
 
     /**
@@ -83,5 +132,21 @@ class OfferController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete($id)
+    {
+        $offer = Offer::find($id);
+        $offer->delete();
+        return redirect()->route('offers.index')
+                        ->with('message','Offer deleted successfully');
+    }
+
+    public function changeOfferStatus(Request $request)
+    {
+        $offer = Offer::find($request->offer_id);
+        $offer->status = $request->status;
+        $offer->save();
+        return response()->json(['message'=>'Status change successfully.']);
     }
 }

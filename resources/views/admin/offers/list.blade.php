@@ -51,8 +51,8 @@
                         <table id="myTable" class="dd table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Offer title</th>
-                                    <th>Offer</th>
+                                    <th>Offer(%)</th>
+                                    <th>Title</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -60,23 +60,22 @@
                             <tbody>
                                 @foreach ($offers as $key => $offer)
                                     <tr>
-                                        <td>{{ $offer->name }}</td>
-                                        <td>{{ $customer->email }}</td>
-                                        <td>{{ $customer->phone }}</td>
+                                        <td>{{ $offer->offer }}</td>
+                                        <td>{{ $offer->title }}</td>
                                         <td>
                                             <div class="button-switch">
                                                 <input type="checkbox" id="switch-orange" class="switch toggle-class"
-                                                    data-id="{{ $customer['id'] }}"
-                                                    {{ $customer['status'] ? 'checked' : '' }} />
+                                                    data-id="{{ $offer['id'] }}"
+                                                    {{ $offer['status'] ? 'checked' : '' }} />
                                                 <label for="switch-orange" class="lbl-off"></label>
                                                 <label for="switch-orange" class="lbl-on"></label>
                                             </div>
                                         </td>
                                         <td>
-                                            <a title="Edit Customer" data-route=""
-                                                href="{{ route('customers.edit', $customer->id) }}"><i class="fas fa-edit"></i></a> &nbsp;&nbsp;
+                                            <a title="Edit Offer" data-route=""
+                                                href="{{ route('offers.edit', $offer->id) }}"><i class="fas fa-edit"></i></a> &nbsp;&nbsp;
 
-                                            <a title="Delete Customer" data-route="{{ route('customers.delete', $customer->id) }}"
+                                            <a title="Delete Offer" data-route="{{ route('offers.delete', $offer->id) }}"
                                                 href="javascipt:void(0);" id="delete"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
@@ -100,11 +99,11 @@
                 "aaSorting": [],
                 "columnDefs": [{
                         "orderable": false,
-                        "targets": [3,4]
+                        "targets": [2,3]
                     },
                     {
                         "orderable": true,
-                        "targets": [0, 1, 2]
+                        "targets": [0, 1]
                     }
                 ]
             });
@@ -115,7 +114,7 @@
         $(document).on('click', '#delete', function(e) {
             swal({
                     title: "Are you sure?",
-                    text: "To delete this customer.",
+                    text: "To delete this offer.",
                     type: "warning",
                     confirmButtonText: "Yes",
                     showCancelButton: true
@@ -136,15 +135,15 @@
     <script>
         $('.toggle-class').change(function() {
             var status = $(this).prop('checked') == true ? 1 : 0;
-            var user_id = $(this).data('id');
+            var offer_id = $(this).data('id');
     
             $.ajax({
                 type: "GET",
                 dataType: "json",
-                url: '{{route("customers.change-status")}}',
+                url: '{{route("offers.change-status")}}',
                 data: {
                     'status': status,
-                    'user_id': user_id
+                    'offer_id': offer_id
                 },
                 success: function(resp) {
                     console.log(resp.success)

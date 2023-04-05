@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\ContactUsController as AdminContactUsController;
+use App\Http\Controllers\Admin\CmsController as AdminCmsController;
 use App\Http\Controllers\Frontend\CmsController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\CartController;
@@ -95,8 +96,15 @@ Route::group(['prefix' => 'admin'], function () {
             'blog-categories' => BlogCategoryController::class,
             'offers' => OfferController::class,
         ]);
+        //offer route
+        Route::prefix('offers')->group(function () {
+            Route::get('/offer-delete/{id}', [OfferController::class, 'delete'])->name('offers.delete');
+            Route::post('/update', [OfferController::class, 'update'])->name('offers.update');
+        });
+        Route::get('/changeOfferStatus', [OfferController::class, 'changeOfferStatus'])->name('offers.change-status');
         //  Category Routes
         Route::get('/changeCategoryStatus', [CategoryController::class, 'changeCategoriesStatus'])->name('categories.change-status');
+
         Route::prefix('categories')->group(function () {
             Route::get('/category-delete/{id}', [CategoryController::class, 'delete'])->name('categories.delete');
         });
@@ -125,5 +133,14 @@ Route::group(['prefix' => 'admin'], function () {
 
         //contact us
         Route::get('/contact-us', [AdminContactUsController::class, 'contactUs'])->name('admin.contact-us');
+        //cms
+        Route::group(['prefix'=>'cms'], function(){
+            Route::get('/home-cms', [AdminCmsController::class, 'homeCms'])->name('home.cms');
+            Route::post('/home-cms/store', [AdminCmsController::class, 'homeCmsStore'])->name('home-cms.store');
+            Route::get('/about-cms', [AdminCmsController::class, 'aboutCms'])->name('about.cms');
+            Route::post('/about-cms/store', [AdminCmsController::class, 'aboutCmsStore'])->name('about-cms.store');
+            Route::get('/contact-us-cms', [AdminCmsController::class, 'contactUsCms'])->name('contact-us.cms');
+            Route::post('/contact-us-cms/store', [AdminCmsController::class, 'contactUsCmsStore'])->name('contact-us-cms.store');
+        });   
     });
 });
