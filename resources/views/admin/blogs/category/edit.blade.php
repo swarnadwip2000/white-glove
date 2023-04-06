@@ -35,7 +35,7 @@
                         <hr>
                         <div class="card border-0 border-4">
                             <div class="card-body">
-                                <form action="{{ route('blog-categories.update') }}" method="POST" >
+                                <form action="{{ route('blog-categories.blogCatUpdate') }}" method="POST" >
                                    
                                     @csrf
                                     <div class="border p-4 rounded">

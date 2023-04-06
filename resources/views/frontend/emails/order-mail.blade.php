@@ -23,7 +23,7 @@
         <tbody>
             @foreach($order->orderItems as $item)
                 <tr>
-                    <td><img src="{{ URL::asset('storage') }}/{{ $item->product->featuredImage($item['product_id'])->image }}" width="50px" height="50px" /></td>
+                    <td><img src="{{ URL::asset('storage') }}/{{ $item->product->image }}" width="50px" height="50px" /></td>
                     <td>{{$item->product_name}}</td>
                     <td>{{$item->product_quantity}}</td>
                     <td>${{$item->product_price * $item->product_quantity}}</td>

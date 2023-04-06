@@ -98,6 +98,11 @@ class BlogController extends Controller
     public function update(Request $request)
     {
        
+        //
+    }
+
+    public function blogUpdate(Request $request)
+    {
         $request->validate([
             'category_id' =>'required',
             'name' => 'required',

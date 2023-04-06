@@ -77,6 +77,12 @@ class BlogCategoryController extends Controller
    
     public function update(Request $request)
     {      
+        //
+    }
+
+
+    public function blogCatUpdate(Request $request)
+    {
         $request->validate([
             'name' => 'required',
             'slug' => 'required|unique:blog_categories,slug,'.$request->category_id
@@ -87,6 +93,8 @@ class BlogCategoryController extends Controller
         $update_blog_category->save();
         return redirect()->route('blog-categories.index')->with('message', 'Blog Category has been updated successfully');
     }
+
+
 
     /**
      * Remove the specified resource from storage.

@@ -35,7 +35,7 @@
                         <hr>
                         <div class="card border-0 border-4">
                             <div class="card-body">
-                                <form action="{{ route('offers.update') }}" method="post" enctype="multipart/form-data">
+                                <form action="{{ route('offers.offerUpdate') }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     <div class="border p-4 rounded">
                                         <div class="row">

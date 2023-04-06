@@ -6,8 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Mail\OrderConfirmationMail;
 use App\Models\DeliverAddress;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
+use Stripe;
+
+
 
 class OrderController extends Controller
 {
@@ -88,6 +98,7 @@ class OrderController extends Controller
 
     public function placeOrder(Request $request)
     {
+        
         $request->validate([
             'shipping_name' => 'required',
             'shipping_phone' => 'required',
@@ -105,25 +116,21 @@ class OrderController extends Controller
         try {
             // dd($request->all());
             $data = $request->all();
-            $seller_id = Product::where('id', $data['product_id'][0])->pluck('seller_id');
             // if product is Out of stock
             foreach ($data['product_id'] as $key => $value) {
                 $product = Product::where('id', $value)->first();
-                // is token is unavailable seller will not be able to place order
-                $seller_token = TokenBalance::where('seller_id', $seller_id[0])->first();
-                if ($product->quantity < $data['quantity'][$key] || $seller_token->token == 0) {
+                if ($product->quantity < $data['quantity'][$key]) {
                     return redirect()->back()->with('error', 'Product is out of stock');
                 }
             }
             // create a random unique order number
             $order_number = mt_rand(100000000, 999999999);
             if ($data['payment_method'] == 'stripe') {
-
-                $payment_details = StripeCredential::where('seller_id', $seller_id[0])->first();
-                // Stripe\Stripe::setApiKey($payment_details['stripe_secret']);
-                $stripe = Stripe::setApiKey($payment_details['stripe_secret']);
+                  
+                $stripe = Stripe::setApiKey(env('STRIPE_SECRET')); 
+                      
                 //we have to create a customer for payment
-                $customer = $stripe->customers()->create(array(
+                 $customer = $stripe->customers()->create(array(
                     'address' => [
                         'line1' => $data['shipping_address'],
                         'postal_code' => $data['shipping_zipcode'],
@@ -133,12 +140,11 @@ class OrderController extends Controller
                     "email" => Auth::user()->email,
                     "name" => $data['shipping_name'],
                     "source" => $data['stripeToken']
-
                 ));
 
-
+             
                 // create a charge for created customer 
-
+         
                 $charge = $stripe->charges()->create([
                     "amount" => $data['total_amount'],
                     "currency" => 'USD',
@@ -155,19 +161,13 @@ class OrderController extends Controller
                     ],
                 ]);
 
-
-
-                // dd($charge);
+               
                 if ($charge['status'] == 'succeeded') {
                     // token will be deducted from seller account
                     $count_product = count($data['product_id']);
-                    $seller_token = TokenBalance::where('seller_id', $seller_id[0])->first();
-                    $seller_token->token = $seller_token->token - $count_product;
-                    $seller_token->save();
                     // save order
                     $order = new Order();
                     $order->user_id = Auth::user()->id;
-                    $order->seller_id = $seller_id[0];
                     $order->order_number = $order_number;
                     $order->shipping_name = $data['shipping_name'];
                     $order->shipping_phone = $data['shipping_phone'];
@@ -196,7 +196,6 @@ class OrderController extends Controller
                         $orderItems->product_quantity = $data['quantity'][$key];
                         $orderItems->product_price = $product->price;
                         $orderItems->product_name = $product->name;
-                        $orderItems->product_thc_range = $product->thc_range;
                         $orderItems->save();
                         // delete product from cart
                         Cart::where('user_id', Auth::user()->id)->where('product_id', $value)->delete();

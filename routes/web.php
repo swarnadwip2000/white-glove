@@ -104,7 +104,7 @@ Route::group(['prefix' => 'admin'], function () {
         //offer route
         Route::prefix('offers')->group(function () {
             Route::get('/offer-delete/{id}', [OfferController::class, 'delete'])->name('offers.delete');
-            Route::post('/update', [OfferController::class, 'update'])->name('offers.update');
+            Route::post('/update', [OfferController::class, 'offerUpdate'])->name('offers.offerUpdate');
         });
         Route::get('/changeOfferStatus', [OfferController::class, 'changeOfferStatus'])->name('offers.change-status');
         //  Category Routes
@@ -126,13 +126,13 @@ Route::group(['prefix' => 'admin'], function () {
         //Blog category routes
         Route::prefix('blog-categories')->group(function () {
             Route::get('/delete/{id}', [BlogCategoryController::class, 'delete'])->name('blog-categories.delete');
-            Route::post('/update/', [BlogCategoryController::class, 'update'])->name('blog-categories.update');
+            Route::post('/update/', [BlogCategoryController::class, 'blogCatUpdate'])->name('blog-categories.blogCatUpdate');
         });
 
         //Blog routes
         Route::prefix('blogs')->group(function () {
             Route::get('/delete/{id}', [BlogController::class, 'delete'])->name('blogs.delete');
-            Route::post('/update/', [BlogController::class, 'update'])->name('blogs.update');
+            Route::post('/update/', [BlogController::class, 'blogUpdate'])->name('blogs.blogUpdate');
         });
         Route::get('/changeBlogStatus', [BlogController::class, 'changeBlogStatus'])->name('blogs.change-status');
 

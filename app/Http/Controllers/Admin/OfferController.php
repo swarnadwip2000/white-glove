@@ -96,8 +96,13 @@ class OfferController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
+    {      
+        //
+    }
+
+
+    public function offerUpdate(Request $request)
     {
-      
         $request->validate([
             'offer' => 'required',
             'title' => 'required',
@@ -120,7 +125,6 @@ class OfferController extends Controller
 
         return redirect()->route('offers.index')
                         ->with('message','Offer updated successfully');
-
     }
 
     /**

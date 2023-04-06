@@ -37,7 +37,8 @@
     <section class="cart_sec">
         <div class="container">
             <form role="form" action="{{ route('place.order') }}" method="post" class="require-validation"
-                data-cc-on-file="false">
+                data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
+                            id="payment-form">
                 @csrf
                 <div class="holder">
                     <div class="container">
@@ -418,6 +419,10 @@
                     $('#billing_state').val(shipping_state);
                     $('#billing_zipcode').val(shipping_zipcode);
                     $('#billing_address').val(shipping_address);
+                    $('#billing_country').removeClass('error');
+                    $('#billing_state').removeClass('error');
+                    $('#billing_zipcode').removeClass('error');
+                    $('#billing_address').removeClass('error');
                     $('#billing_country-error').css('display','none');
                     $('#billing_state-error').css('display','none');
                     $('#billing_zipcode-error').css('display','none');
