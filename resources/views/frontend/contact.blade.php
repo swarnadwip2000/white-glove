@@ -2,7 +2,7 @@
 @section('meta')
 @endsection
 @section('title')
-    White Globe | HOME
+{{ env('APP_NAME') }} | HOME
 @endsection
 @push('styles')
 @endpush

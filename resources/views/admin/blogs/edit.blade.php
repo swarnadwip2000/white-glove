@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-White Globe | Edit Blog Details
+{{ env('APP_NAME') }} | Edit Blog Details
 @endsection
 @push('styles')
 @endpush

@@ -22,6 +22,7 @@ use App\Http\Controllers\Frontend\ForgotPasswordController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\BlogController as FrontendBlogController;
 use App\Http\Controllers\Frontend\ContactUsController;
+use App\Http\Controllers\Frontend\OrderController;
 
 
 
@@ -64,7 +65,10 @@ Route::middleware('customer')->group(function () {
     Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist'); // category wise product
     Route::post('/update-wishlist', [WishlistController::class, 'updateWishlist'])->name('update-wishlist'); // update wishlist
     Route::get('/delete-wishlist/{id}', [WishlistController::class, 'deleteWishlist'])->name('delete-wishlist'); // delete wishlist
-    Route::get('/checkout/{id?}', [CartController::class, 'checkout'])->name('checkout');
+    Route::get('/checkout/{id?}', [OrderController::class, 'checkout'])->name('checkout');
+    Route::post('/save-address', [OrderController::class, 'saveAddress'])->name('save.address'); // crsave address
+    Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order'); // save shipping
+    Route::get('/order-success', [OrderController::class, 'orderSuccess'])->name('order.success'); // order success
 });
 
 Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword'])->name('admin.forget.password');

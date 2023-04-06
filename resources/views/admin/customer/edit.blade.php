@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-White Globe | Edit Customer Details
+{{ env('APP_NAME') }} | Edit Customer Details
 @endsection
 @push('styles')
 @endpush

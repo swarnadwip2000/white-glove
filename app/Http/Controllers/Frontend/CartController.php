@@ -101,50 +101,7 @@ class CartController extends Controller
         return view('frontend.cart');
     }
 
-    public function checkout($id = null)
-    {  
-        
-        if ($id == null) {
-            $count = Cart::where('user_id', Auth::user()->id)->count();
-            if ($count == 0) {
-                return redirect()->back()->with('error', 'Your cart is empty');
-            }
-            $userCarts = Cart::where('user_id', Auth::user()->id)->get();
-            // out of stock
-            foreach ($userCarts as $cart) {
-                $product = Product::where('id', $cart->product_id)->first();
-                
-                if ($product->quantity < $cart->quantity ) {
-                    return redirect()->back()->with('error', 'Product ' . $product->name . ' is out of stock');
-                }
-            }
-            $count = DeliverAddress::where('user_id', Auth::user()->id)->count();
-            $get_product_id = Cart::where('user_id', Auth::user()->id)->pluck('product_id');
-            if ($count > 0) {
-                $address = DeliverAddress::where('user_id', Auth::user()->id)->first();
-            } else {
-                $address = null;
-            }
-            $from = 'cart';
-            return view('frontend.shipping')->with(compact('userCarts', 'from', 'address'));
-        } else {
-            // buy now checkout
-            $product = Product::where('id', $id)->first();
-            // seller token balance is zero
-            if ($product->quantity < 1 ) {
-                return redirect()->back()->with('error', 'Product ' . $product->name . ' is out of stock');
-            }
-
-            $count = DeliverAddress::where('user_id', Auth::user()->id)->count();
-            if ($count > 0) {
-                $address = DeliverAddress::where('user_id', Auth::user()->id)->first();
-            } else {
-                $address = null;
-            }
-            $from = 'buy_now';
-            return view('frontend.shipping')->with(compact('product', 'from', 'address'));
-        }
-    }
+  
 
     public function decreaseQuantity(Request $request)
     {

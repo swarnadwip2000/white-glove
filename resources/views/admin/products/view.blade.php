@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-White Globe | View Products Details
+{{ env('APP_NAME') }} | View Products Details
 @endsection
 @push('styles')
 @endpush

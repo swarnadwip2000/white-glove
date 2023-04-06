@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-White Globe Admin | Profile
+{{ env('APP_NAME') }} Admin | Profile
 @endsection
 @push('styles')
 @endpush

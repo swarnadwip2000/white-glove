@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-    All Offers - White Globe
+    All Offers - {{ env('APP_NAME') }}
 @endsection
 @push('styles')
 <style>

@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-White Globe | Create Category
+{{ env('APP_NAME') }} | Create Category
 @endsection
 @push('styles')
 @endpush

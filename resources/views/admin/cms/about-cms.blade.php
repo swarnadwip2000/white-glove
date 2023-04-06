@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-    White Globe | Edit About Cms
+{{ env('APP_NAME') }} | Edit About Cms
 @endsection
 @push('styles')
 @endpush
