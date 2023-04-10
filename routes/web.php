@@ -69,6 +69,8 @@ Route::middleware('customer')->group(function () {
     Route::post('/save-address', [OrderController::class, 'saveAddress'])->name('save.address'); // crsave address
     Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order'); // save shipping
     Route::get('/order-success', [OrderController::class, 'orderSuccess'])->name('order.success'); // order success
+
+    Route::get('/product-review', [ProductController::class, 'productReview'])->name('product.reviews'); // add review
 });
 
 Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword'])->name('admin.forget.password');

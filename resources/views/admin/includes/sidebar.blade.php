@@ -58,6 +58,12 @@
                     </ul>
                 </li>
 
+                <li class="menu-title">
+                    <span>Order Section</span>
+                </li>
+                <li class="">
+                    <a href="" ><i class="la la-users"></i> <span>Customers order</span></a>                 
+                </li>
                
 
                 <li class="menu-title">

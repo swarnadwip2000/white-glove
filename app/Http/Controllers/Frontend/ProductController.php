@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
 class ProductController extends Controller
@@ -100,6 +103,44 @@ class ProductController extends Controller
     {
         // return $request;
         $get_product = Product::where('discount','>=', $request->range)->get();
+
+    }
+
+    public function productReview(Request $request)
+    {
+        
+        $validated = Validator::make($request->all(), [
+            'review' => 'required',
+        ],
+        [
+            'review.required' => 'Please enter your review!',
+        ]);
+
+        if ($validated->fails()) {
+            // send first error message
+            return response()->json(['error' => $validated->errors()->first(), 'status' => 'error']);
+        }
+        try {
+            if ($request->ajax()) {
+                $data = $request->all();
+                $check_review = Review::where('user_id', auth()->user()->id)->where('product_id', $data['product_id'])->first();
+                if ($check_review) {
+                    $check_review->rating = $data['rating'];
+                    $check_review->comment = $data['review'];
+                    $check_review->save();
+                }
+                $review = new Review();
+                $review->user_id = auth()->user()->id;
+                $review->product_id = $data['product_id'];
+                $review->rating = $data['rating'];
+                $review->comment = $data['review'];
+                $review->save();
+                $reviews = Review::where('product_id', $data['product_id'])->get();
+                return response()->json(['view'=>(String)View::make('frontend.product-reviews')->with(compact('reviews')), 'message' => 'Review added successfully!', 'status' => 'success']);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage(), 'status' => 'error']);
+        }
 
     }
 }

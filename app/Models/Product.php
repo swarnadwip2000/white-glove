@@ -38,4 +38,21 @@ class Product extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    public static function getReview($product_id)
+    {
+        $reviews = Review::where('product_id', $product_id)->get();
+        $totalReview = $reviews->count();
+        $totalRating = 0;
+        foreach ($reviews as $review) {
+            $totalRating += $review->rating;
+        }
+
+        if ($totalReview > 0) {
+            $averageRating = ($totalRating) / ($totalReview);
+        } else {
+            $averageRating = 0;
+        }
+        return number_format((float)$averageRating, 2, '.', '');
+    }
  }

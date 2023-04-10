@@ -165,11 +165,47 @@
                     {!! $product['description'] !!}
                   </div>
               </div>
-              <div class="tab-pane fade" id="menu1">
-                  <div class="review">
-                      <p>PUT REVIEWS DESIGN HERE</p>
-                  </div>
-              </div>
+              <div class="tab-pane container fade" id="menu1">
+                <div class="review">
+                    <div class="pure_tab">
+                        <form id="review-form" action="javascript:void(00);" method="post">
+                            <h2>Write Your Review</h2>
+                            <div class="rate">
+                                <input type="radio" checked id="star5" class="rate" name="rating" value="5" />
+                                <label for="star5" title="text">5 stars</label>
+                                <input type="radio"  id="star4" class="rate" name="rating"
+                                    value="4" />
+                                <label for="star4" title="text">4 stars</label>
+                                <input type="radio" id="star3" class="rate" name="rating"
+                                    value="3" />
+                                <label for="star3" title="text">3 stars</label>
+                                <input type="radio" id="star2" class="rate" name="rating"
+                                    value="2">
+                                <label for="star2" title="text">2 stars</label>
+                                <input type="radio" id="star1" class="rate" name="rating"
+                                    value="1" />
+                                <label for="star1" title="text">1 star</label>
+                            </div>
+                            <div class="form-group">
+                                {{-- <label class="control-label" for="review">Your Review:</label> --}}
+                                <textarea class="form-control" rows="5" placeholder="Write your review..." name="review" id="comment"></textarea>
+                                <span id="reviewInfo" class="help-block pull-right">
+                            </div>
+                            @if (Auth::check() && Auth::user()->hasRole('CUSTOMER'))
+                                <a href="javascript:void(0);" class="red_btn mb-5 submit-btn"
+                                    data-route=""><span>Submit</span></a>
+                            @else
+                                <a href="{{ route('login') }}" class="red_btn mb-5"><span>Submit</span></a>
+                            @endif
+                        </form>
+
+                        <div id="reviews-testmonial">
+                         @include('frontend.product-reviews')
+                      </div>
+
+                    </div>
+                </div>
+            </div>
               <div class="tab-pane fade" id="menu2">
                   <div class="specification">
                     {!! $product['specification'] !!}
@@ -253,6 +289,40 @@
             });
         });
     });
+</script>
+
+<script>
+  $(document).ready(function() {
+      $('.submit-btn').on('click', function() {
+          var route = $(this).data('route');
+          var review = $('#comment').val();
+          var rating = $('input[name=rating]:checked').val();
+          var product_id = {{ $product['id'] }};
+          var url = "{{ route('product.reviews') }}";
+        
+         
+          $.ajax({
+              url: url,
+              type: 'GET',
+              data: {
+                  "_token": "{{ csrf_token() }}",
+                  "review": review,
+                  "rating": rating,
+                  "product_id": product_id
+              },
+              success: function(response) {
+                  // console.log(response);
+                  if (response.status == 'success') {
+                      $('#comment').val('');
+                      $('#reviews-testmonial').html(response.view);
+                      toastr.success(response.message);
+                  } else {
+                      toastr.error(response.error);
+                  }
+              }
+          });
+      });
+  });
 </script>
 
 

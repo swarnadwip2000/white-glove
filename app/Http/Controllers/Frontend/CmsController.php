@@ -12,6 +12,9 @@ use App\Models\Offer;
 use App\Models\HomeCms;
 use App\Models\AboutCms;
 use App\Models\ContactUsCms;
+use App\Models\OrderItem;
+use App\Models\Review;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -25,7 +28,8 @@ class CmsController extends Controller
         $blogs = Blog::where('status',1)->orderby('id', 'desc')->get();
         $homeCms = HomeCms::first();
         $offers = Offer::where('status',1)->orderby('id', 'desc')->get();
-        return view('frontend.home',compact('categories','featured_products','blogs','homeCms','offers'));
+        $best_selling = OrderItem::select('product_id', DB::raw('count(*) as total'))->groupBy('product_id')->orderby('total', 'desc')->with('product')->get();
+        return view('frontend.home',compact('categories','featured_products','blogs','homeCms','offers','best_selling'));
     }
 
     public function about()
@@ -76,7 +80,8 @@ class CmsController extends Controller
             $categories = Category::where('status', 1)->Orderby('id','desc')->get();
             $product = Product::findOrFail($product_id);
             $related_products = Product::where('category_id', $product->category_id)->where('id', '!=', $product_id)->Orderby('id','desc')->get();
-            return view('frontend.product-detail',compact('categories','product','related_products'));
+            $reviews = Review::where('product_id', $product_id)->get();
+            return view('frontend.product-detail',compact('categories','product','related_products','reviews'));
         }  catch (\Exception $e) {
             \Log::error( $e->getMessage() );
             abort(404);

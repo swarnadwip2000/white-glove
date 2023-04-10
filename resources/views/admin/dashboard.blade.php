@@ -51,7 +51,21 @@
                                 <span class="dash-widget-icon"><i class="fa fa-users"></i></span>
                                 <div class="dash-widget-info">
                                     <h3>{{ $count['customer'] }}</h3>
-                                    <span>Total Customer</span>
+                                    <span>Active Customers</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <a href="{{ route('customers.index') }}" style="color: black">
+                        <div class="card dash-widget">
+                            <div class="card-body">
+                                <span class="dash-widget-icon"><i class="fa fa-dollar"></i></span>
+                                <div class="dash-widget-info">
+                                    <h3>${{ $sum['transaction'] }}</h3>
+                                    <span>Total Transaction</span>
                                 </div>
                             </div>
                         </div>
