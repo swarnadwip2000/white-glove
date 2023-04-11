@@ -64,7 +64,9 @@
                                     @endif
                             </div>
                             <div class="price my-2">Price: ${{ $product['discounted_price'] }} <strike
-                                    class="original-price">${{ $product['price'] }}</strike></div>
+                                    class="original-price">${{ $product['price'] }}</strike>
+                            </div>
+                            <div class="my-2">@if (AddToCart::CheckStock($product['id']) == 0)<span class="outstock">Out of stock</span>@endif</div>
 
                             <div class="cart">
                                 @if (AddToCart::CheckCartItem($product['id']) > 0)

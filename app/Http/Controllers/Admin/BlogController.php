@@ -157,37 +157,5 @@ class BlogController extends Controller
         $blog_status->save();
         return response()->json(['success' => 'Status change successfully.']);
     }
-
-    public function blogUpdate(Request $request)
-    {
-        // return $request->all();
-        $request->validate([
-            'blog_category_id' =>'required',
-            'name' => 'required',
-            'slug' => 'required|unique:blogs,slug,'.$request->id,
-            'description' => 'required',
-        ], [
-            'blog_category_id.required' => 'Category field is required.'
-        ]);
-
-        $blog = Blog::findOrFail($request->id);
-        $blog->name = $request->name;
-        $blog->blog_category_id = $request->blog_category_id;
-        $blog->slug = $request->slug;
-        $blog->description = $request->description;
-        if ($request->hasFile('image')) {
-            $request->validate([
-                'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            ]);
-            
-            $file= $request->file('image');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $image_path = $request->file('image')->store('blogs', 'public');
-            $blog->image = $image_path;
-        }
-        $blog->save();
-        return redirect()->route('blogs.index')->with('message', 'Blog has been updated successfully.');
-    }
-
-    
+   
 }

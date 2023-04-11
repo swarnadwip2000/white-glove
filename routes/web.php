@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\ContactUsController as AdminContactUsController;
 use App\Http\Controllers\Admin\CmsController as AdminCmsController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Frontend\CmsController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\CartController;
@@ -99,6 +100,7 @@ Route::group(['prefix' => 'admin'], function () {
             'customers' => CustomerController::class,
             'categories' => CategoryController::class,
             'products' => AdminProductController::class,
+            'orders' => AdminOrderController::class,
             'blogs' => BlogController::class,
             'blog-categories' => BlogCategoryController::class,
             'offers' => OfferController::class,

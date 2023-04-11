@@ -65,7 +65,7 @@
                                 <span class="dash-widget-icon"><i class="fa fa-dollar"></i></span>
                                 <div class="dash-widget-info">
                                     <h3>${{ $sum['transaction'] }}</h3>
-                                    <span>Total Transaction</span>
+                                    <span>Total Sales</span>
                                 </div>
                             </div>
                         </div>

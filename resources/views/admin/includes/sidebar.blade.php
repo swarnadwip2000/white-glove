@@ -7,7 +7,7 @@
                 </li>
                 
                 <li class="menu-title">
-                    <span>Main Section</span>
+                    <span>Profile Section</span>
                 </li>
 
                 <li class="submenu">
@@ -24,7 +24,7 @@
                     </ul>
                 </li>
                 <li class="menu-title">
-                    <span>User Informations</span>
+                    <span>User Management</span>
                 </li>
                 <li class="{{ Request::is('admin/customers*') ? 'active' : ' ' }}">
                     <a href="{{ route('customers.index') }}" ><i class="la la-users"></i> <span>Manage Customers</span></a>                 
@@ -61,20 +61,34 @@
                 <li class="menu-title">
                     <span>Order Section</span>
                 </li>
-                <li class="">
-                    <a href="" ><i class="la la-users"></i> <span>Customers order</span></a>                 
+                <li class="{{ Request::is('admin/orders*') ? 'active' : ' ' }}">
+                    <a href="{{ route('orders.index') }}"><i class="la la-shopping-bag"></i> <span>Customers order</span></a>                 
                 </li>
-               
 
                 <li class="menu-title">
                     <span>Other Section</span>
                 </li>
+                <li class="submenu">
+                    <a href="#" class="{{ Request::is('admin/offers*')  ? 'active' : ' ' }}"><i class="la la-tag"></i> <span>Offer</span> <span
+                            class="menu-arrow"></span></a>
+                    <ul style="display: none;">
+                        <li class="{{ Request::is('admin/offers*') ? 'active' : ' ' }}">
+                            <a href="{{ route('offers.index') }}">List</a>
+                        </li>         
+                    </ul>
+                </li>
+
                 <li class="{{ Request::is('admin/contact-us*') ? 'active' : ' ' }}">
                     <a href="{{ route('admin.contact-us') }}" ><i class="la la-phone"></i> <span>Contact Us</span></a>                 
                 </li>
 
+                
+                <li class="menu-title">
+                    <span>Content Management</span>
+                </li>
+                
                 <li class="submenu">
-                    <a href="#" class="{{ Request::is('admin/blogs*') || Request::is('admin/blog-categories*') ? 'active' : ' ' }}"><i class="la la-cubes"></i> <span>Blog</span> <span
+                    <a href="#" class="{{ Request::is('admin/blogs*') || Request::is('admin/blog-categories*') ? 'active' : ' ' }}"><i class="la la-blog"></i> <span>Blog</span> <span
                             class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li class="{{ Request::is('admin/blog-categories*') ? 'active' : ' ' }}">
@@ -83,16 +97,6 @@
                         <li class="{{ Request::is('admin/blogs*') ? 'active' : ' ' }}">
                             <a href="{{ route('blogs.index') }}">List</a>
                         </li>           
-                    </ul>
-                </li>
-
-                <li class="submenu">
-                    <a href="#" class="{{ Request::is('admin/offers*')  ? 'active' : ' ' }}"><i class="la la-cubes"></i> <span>Offer</span> <span
-                            class="menu-arrow"></span></a>
-                    <ul style="display: none;">
-                        <li class="{{ Request::is('admin/offers*') ? 'active' : ' ' }}">
-                            <a href="{{ route('offers.index') }}">List</a>
-                        </li>         
                     </ul>
                 </li>
 
