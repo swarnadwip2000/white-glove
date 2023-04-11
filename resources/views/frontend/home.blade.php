@@ -209,6 +209,10 @@
                                     </div>
                                     <div class="price my-2"><b>Price: ${{ $product['discounted_price'] }}</b>
                                         <strike class="original-price">${{ $product['price'] }}</strike>
+                                        @if (AddToCart::CheckStock($product['id']) == 0)
+                                                    <span class="outstock">Out of
+                                                        stock</span>
+                                                @endif
                                     </div>
                                     <div class="cart">
                                         @if (AddToCart::CheckCartItem($product['id']) > 0)
@@ -356,20 +360,22 @@
                                                 @endphp
                                             @endfor
                                         </ul>
-                                    @else
-                                        <ul>
-                                            <li><i class=""> </i></li>
-                                            <li><i class=""> </i></li>
-                                            <li><i class=""> </i></li>
-                                            <li><i class=""> </i></li>
-                                            <li><i class=""> </i></li>
-                                        </ul>
-                                    @endif
+                                        @else
+                                            <ul>
+                                                <li><i class=""> </i></li>
+                                                <li><i class=""> </i></li>
+                                                <li><i class=""> </i></li>
+                                                <li><i class=""> </i></li>
+                                                <li><i class=""> </i></li>
+                                            </ul>
+                                        @endif
                                     </div>
                                     <h3>Price: ${{ $sell_product['product']['discounted_price'] }}</h3>
-                                    <p> @if (AddToCart::CheckStock($sell_product['product']['id']) == 0)
-                                        <span class="outstock">Out of stock</span>
-                                    @endif</p>
+                                    <div class="my-2">
+                                    @if (AddToCart::CheckStock($sell_product['product']['id']) == 0)
+                                        <span class="outstock"> Out of stock</span>
+                                    @endif
+                                    </div>
                                     <div class="cart">
                                         @if (AddToCart::CheckCartItem($sell_product['product']['id']) > 0)
                                             <a href="{{ route('cart') }}"><i class="fa-solid fa-cart-shopping"></i></a>

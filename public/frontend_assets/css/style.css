@@ -2527,7 +2527,9 @@ main .content {
 }
 
 
-//out ::-webkit-scrollbar-track.disabledbutton {
+
+/* disable button out of stock */
+.disabledbutton {
     pointer-events: none;
     opacity: 0.3;
 }

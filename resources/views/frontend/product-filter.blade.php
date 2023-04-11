@@ -33,16 +33,35 @@
                         </div>
                         <div class="card_text">
                             <h4><a
-                                    href="{{ route('product-detail', ['slug' => $product['slug'], 'id' => encrypt($product['id'])]) }}">{!! Str::limit($product->name, 20, ' ...') !!}</a>
+                                    href="{{ route('product-detail', ['slug' => $product['slug'], 'id' => encrypt($product['id'])]) }}">{!! Str::limit($product->name, 17, ' ...') !!}</a>
                             </h4>
                             <div class="card_star">
+                                @if ($product->getReview($product['id']) != 0)
                                 <ul>
-                                    <li><i class="fa-solid fa-star"></i></li>
-                                    <li><i class="fa-solid fa-star"></i></li>
-                                    <li><i class="fa-solid fa-star"></i></li>
-                                    <li><i class="fa-solid fa-star"></i></li>
-                                    <li><i class="fa-solid fa-star"></i></li>
+                                    @php
+                                        $count = 1;
+                                    @endphp
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= round($product->getReview($product->id)))
+                                            <li><i class="fa-solid fa-star"></i></li>
+                                        @else
+                                            <li> <i class="fa-solid fa-star"
+                                                    style="color: #bbb9ad !important;"></i></li>
+                                        @endif
+                                        @php
+                                            $count++;
+                                        @endphp
+                                    @endfor
                                 </ul>
+                            @else
+                                <ul>
+                                    <li><i class=""> </i></li>
+                                    <li><i class=""> </i></li>
+                                    <li><i class=""> </i></li>
+                                    <li><i class=""> </i></li>
+                                    <li><i class=""> </i></li>
+                                </ul>
+                                    @endif
                             </div>
                             <div class="price my-2">Price: ${{ $product['discounted_price'] }} <strike
                                     class="original-price">${{ $product['price'] }}</strike></div>
