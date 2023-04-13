@@ -146,5 +146,17 @@
           }
       });
   </script>
+  <script>
+    $(document).ready(function() {
+        toastr.options = {
+        'positionClass': 'toast-top-right',
+        // 'preventDuplicates': false,
+        'showDuration': '10',
+        'hideDuration': '10',
+        'timeOut': '800',
+        'extendedTimeOut': '800',
+        }
+        });
+</script>
   </body>
 </html>

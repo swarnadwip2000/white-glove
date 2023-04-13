@@ -124,17 +124,18 @@ class ProductController extends Controller
             if ($request->ajax()) {
                 $data = $request->all();
                 $check_review = Review::where('user_id', auth()->user()->id)->where('product_id', $data['product_id'])->first();
-                if ($check_review) {
+                if($check_review !='') {
                     $check_review->rating = $data['rating'];
                     $check_review->comment = $data['review'];
-                    $check_review->save();
+                    $check_review->update();
+                }else{
+                    $review = new Review();
+                    $review->user_id = auth()->user()->id;
+                    $review->product_id = $data['product_id'];
+                    $review->rating = $data['rating'];
+                    $review->comment = $data['review'];
+                    $review->save();
                 }
-                $review = new Review();
-                $review->user_id = auth()->user()->id;
-                $review->product_id = $data['product_id'];
-                $review->rating = $data['rating'];
-                $review->comment = $data['review'];
-                $review->save();
                 $reviews = Review::where('product_id', $data['product_id'])->get();
                 return response()->json(['view'=>(String)View::make('frontend.product-reviews')->with(compact('reviews')), 'message' => 'Review added successfully!', 'status' => 'success']);
             }
