@@ -95,9 +95,7 @@
     @endif
 
 
-    <div class="">
-        {!! $products->links() !!}
-    </div>
+        {{ $products->links()}}
 @else
     <div>
         <h4>No Product Found...</h4>

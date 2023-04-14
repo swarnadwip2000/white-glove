@@ -56,7 +56,7 @@ class CmsController extends Controller
                 return view('frontend.products',compact('categories','products','single_category'));
             }else if($slug == 'featured'){
                 $categories = Category::where('status', 1)->Orderby('id','desc')->get();
-                $products = Product::where('status', 1)->where('feature_product', 1)->Orderby('id','desc')->paginate(20);
+                $products = Product::where('status', 1)->where('feature_product', 1)->Orderby('id','desc')->paginate(10);
                 $single_category = "All Products";
                 return view('frontend.products',compact('categories','products','single_category'));
             }else{
@@ -108,8 +108,6 @@ class CmsController extends Controller
     {
         return view('frontend.offer');  
     }
-
-    
 
    
 }
