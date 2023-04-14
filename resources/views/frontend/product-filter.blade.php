@@ -33,7 +33,7 @@
                         </div>
                         <div class="card_text">
                             <h4><a
-                                    href="{{ route('product-detail', ['slug' => $product['slug'], 'id' => encrypt($product['id'])]) }}">{!! Str::limit($product->name, 17, ' ...') !!}</a>
+                                    href="{{ route('product-detail', ['slug' => $product['slug'], 'id' => encrypt($product['id'])]) }}">{!! Str::limit($product->name, 50, ' ...') !!}</a>
                             </h4>
                             <div class="card_star">
                                 @if ($product->getReview($product['id']) != 0)

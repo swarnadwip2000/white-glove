@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Traits\ImageTrait;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 class CmsController extends Controller
 {
