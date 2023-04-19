@@ -25,15 +25,14 @@ use App\Http\Controllers\Frontend\BlogController as FrontendBlogController;
 use App\Http\Controllers\Frontend\ContactUsController;
 use App\Http\Controllers\Frontend\OrderController;
 
-
-
 // Clear cache
 Route::get('clear', function () {
     Artisan::call('optimize:clear');
     return "Optimize clear has been successfully";
 });
 
-// Route::get('/', [AuthController::class, 'login'])->name('admin.login');
+/* ----------------- Frontend Routes -----------------*/
+
 Route::get('/', [CmsController::class, 'home'])->name('home');
 Route::get('/about', [CmsController::class, 'about'])->name('about');
 Route::get('/contact', [CmsController::class, 'contact'])->name('contact');
@@ -41,7 +40,6 @@ Route::get('/offer',[CmsController::class, 'offer'])->name('offer');
 Route::post('/user-contactus-submit', [ContactUsController::class, 'addContact'])->name('add-to-contactus');
 Route::get('/product/{slug}', [CmsController::class, 'products'])->name('product');
 Route::get('/product-detail/{slug}/{id}', [CmsController::class, 'productDetail'])->name('product-detail');
-
 Route::get('/cart', [CartController::class, 'cart'])->name('cart');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -61,7 +59,6 @@ Route::post('/reset-password-check', [ForgotPasswordController::class, 'resetPas
 Route::post('/product-search', [ProductController::class, 'productSearch'])->name('product.search');
 Route::get('/product-sort', [ProductController::class, 'productSort'])->name('product.sorting'); // product sort
 
-
 Route::middleware('customer')->group(function () {
     Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist'); // category wise product
     Route::post('/update-wishlist', [WishlistController::class, 'updateWishlist'])->name('update-wishlist'); // update wishlist
@@ -70,16 +67,16 @@ Route::middleware('customer')->group(function () {
     Route::post('/save-address', [OrderController::class, 'saveAddress'])->name('save.address'); // crsave address
     Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order'); // save shipping
     Route::get('/order-success', [OrderController::class, 'orderSuccess'])->name('order.success'); // order success
-
     Route::get('/product-review', [ProductController::class, 'productReview'])->name('product.reviews'); // add review
 });
 
 Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword'])->name('admin.forget.password');
 Route::post('change-password', [ForgetPasswordController::class, 'changePassword'])->name('admin.change.password');
 Route::get('forget-password/show', [ForgetPasswordController::class, 'forgetPasswordShow'])->name('admin.forget.password.show');
-// Route::get('reset-password/{id}/{token}', [ForgetPasswordController::class, 'resetPassword'])->name('admin.reset.password');
 Route::post('change-password', [ForgetPasswordController::class, 'changePassword'])->name('admin.change.password');
 
+
+/* ----------------- Admin Routes -----------------*/
 
 Route::get('/admin', [AdminAuthController::class, 'admin'])->name('admin');
 Route::group(['prefix' => 'admin'], function () {
