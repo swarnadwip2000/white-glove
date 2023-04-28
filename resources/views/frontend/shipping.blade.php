@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="inner_banner_ontent">
-                        <h2>Shipping and Billing</h2>
+                        <h1>Shipping and Billing</h1>
                     </div>
                 </div>
             </div>
