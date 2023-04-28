@@ -78,10 +78,10 @@
                     </div>
                     <div class="social_bnr">
                       <ul>
-                        <li><a href=""><i class="fa-brands fa-apple"></i></a></li>
-                        <li><a href=""><i class="fa-brands fa-google"></i></a></li>
-                        <li><a href=""><i class="fa-brands fa-facebook-f"></i></a></li>
-                        <li><a href=""><i class="fa-brands fa-twitter"></i></a></li>
+                        {{-- <li><a href=""><i class="fa-brands fa-apple"></i></a></li> --}}
+                        <li><a href="{{ route('social.login', ['provider' => 'google']) }}"><i class="fa-brands fa-google"></i></a></li>
+                        <li><a href="{{ route('social.login', ['provider' => 'facebook']) }}"><i class="fa-brands fa-facebook-f"></i></a></li>
+                        {{-- <li><a href=""><i class="fa-brands fa-twitter"></i></a></li> --}}
                       </ul>
                     </div>
                     

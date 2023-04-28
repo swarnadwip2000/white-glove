@@ -24,6 +24,7 @@ use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\BlogController as FrontendBlogController;
 use App\Http\Controllers\Frontend\ContactUsController;
 use App\Http\Controllers\Frontend\OrderController;
+use App\Http\Controllers\Frontend\SocialLoginController;
 
 // Clear cache
 Route::get('clear', function () {
@@ -58,6 +59,10 @@ Route::get('/reset-password/{id}/{token}', [ForgotPasswordController::class, 're
 Route::post('/reset-password-check', [ForgotPasswordController::class, 'resetPasswordCheck'])->name('reset.password.check'); // reset password check
 Route::post('/product-search', [ProductController::class, 'productSearch'])->name('product.search');
 Route::get('/product-sort', [ProductController::class, 'productSort'])->name('product.sorting'); // product sort
+
+// social login
+Route::get('/login/{provider}', [SocialLoginController::class, 'redirectToProvider'])->name('social.login');
+Route::get('/login/callback/{provider}', [SocialLoginController::class, 'handleProviderCallback']);
 
 Route::middleware('customer')->group(function () {
     Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist'); // category wise product
