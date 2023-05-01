@@ -39,7 +39,7 @@ class OfferController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'offer' => 'required',
+            'offer' => 'required|numeric|min:1|max:99',
             'title' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -105,7 +105,7 @@ class OfferController extends Controller
     public function offerUpdate(Request $request)
     {
         $request->validate([
-            'offer' => 'required',
+            'offer' => 'required|numeric|min:1|max:99',
             'title' => 'required',
         ]);
          

@@ -67,7 +67,7 @@
                                 <div class="me-2">Sort By: </div>
                                 <div class="all_select">
                                     <select class="form-select sort-by" aria-label="">
-                                        <option selected="" value="popularity">Popularity</option>
+                                        <option selected="" value="popularity">All</option>
                                         <option value="1">Price- Low to High</option>
                                         <option value="0">Price- High to Low</option>
                                     </select>
