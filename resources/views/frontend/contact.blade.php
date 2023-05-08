@@ -47,9 +47,9 @@
                                             <div class="form-group-wrap">
                                                 <label for="Last-Name" class="form-label">Last Name</label>
                                                 <input type="text" class="form-control" name="last_name">
-                                                @if ($errors->has('first_name'))
+                                                @if ($errors->has('last_name'))
                                                     <div class="error" style="color:red;">
-                                                        {{ $errors->first('first_name') }}</div>
+                                                        {{ $errors->first('last_name') }}</div>
                                                 @endif
                                             </div>
                                         </div>
@@ -57,18 +57,30 @@
                                             <div class="form-group-wrap">
                                                 <label for="Email-Id" class="form-label">Email Id</label>
                                                 <input type="email" class="form-control" name="email">
+                                                @if ($errors->has('email'))
+                                                    <div class="error" style="color:red;">
+                                                        {{ $errors->first('email') }}</div>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-md-6 col-12">
                                             <div class="form-group-wrap">
                                                 <label for="Phone Number" class="form-label">Phone Number</label>
                                                 <input type="text" class="form-control" name="phone">
+                                                @if ($errors->has('phone'))
+                                                    <div class="error" style="color:red;">
+                                                        {{ $errors->first('phone') }}</div>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-xl-12">
                                             <div class="form-group-wrap">
                                                 <label for="message" class="form-label">Message</label>
                                                 <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+                                                @if ($errors->has('message'))
+                                                    <div class="error" style="color:red;">
+                                                        {{ $errors->first('message') }}</div>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-xl-12 text-center">
